@@ -1,0 +1,46 @@
+# Ignore huge models
+*.bin
+*.gguf
+
+# Whisper.cpp repo clone
+android/app/src/main/cpp/whisper.cpp/
+
+# Build output
+build/
+android/.gradle/
+.android/
+.flutter-plugins-dependencies
+.flutter-plugins
+.cxx/
+
+# Platform-specific build dirs
+windows/runner/
+windows/flutter/
+windows/sakhi_native/
+
+linux/
+macos/
+ios/
+web/
+
+# Native binaries
+*.so
+*.dll
+*.a
+*.o
+
+# IDE files
+.vscode/
+.idea/
+*.iml
+
+# Secrets
+*.jks
+*.keystore
+google-services.json
+key.properties
+
+# Logs
+*.log
+*.tmp
+*.bak
