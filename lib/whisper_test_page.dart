@@ -5,9 +5,12 @@ import 'package:provider/provider.dart';
 import 'package:path_provider/path_provider.dart';
 
 import 'services/audio_service.dart';
-import 'services/model_manager.dart'; // <--- ADDED THIS IMPORT
+import 'services/model_manager.dart';
 import 'utils/permissions.dart';
 import 'platform/sakhi_platform.dart';
+
+// INTEGRATION: Import the processing screen to connect the pipeline
+import 'screens/assist_processing_screen.dart';
 
 class WhisperTestPage extends StatefulWidget {
   @override
@@ -19,7 +22,7 @@ class _WhisperTestPageState extends State<WhisperTestPage> {
 
   String logText = "";
   bool _recording = false;
-  bool _isLoading = false; // Added to disable button while loading
+  bool _isLoading = false;
 
   void appendLog(String msg) {
     setState(() {
@@ -27,25 +30,20 @@ class _WhisperTestPageState extends State<WhisperTestPage> {
     });
   }
 
-  // FIXED: Now handles both file copying AND native loading
   Future<void> loadModel() async {
     if (_isLoading) return;
-
     setState(() => _isLoading = true);
-    appendLog("STEP 1: Copying model files from assets...");
+    appendLog("STEP 1: Copying model files...");
 
     try {
-      // 1. Copy large files (was causing the startup crash)
       await ModelManager.prepareModels();
-      appendLog("✅ Models copied to internal storage.");
+      appendLog("✅ Models copied.");
 
-      appendLog("STEP 2: Initializing Native Whisper Engine...");
-
-      // 2. Load the model into C++ memory (via background thread in Kotlin)
+      appendLog("STEP 2: Initializing Native Whisper...");
       final platform = Provider.of<SakhiPlatform>(context, listen: false);
       final res = await platform.initialize();
 
-      appendLog("✅ Whisper Loaded Successfully => $res");
+      appendLog("✅ Whisper Loaded => $res");
     } catch (e) {
       appendLog("❌ Error loading models: $e");
     } finally {
@@ -54,20 +52,18 @@ class _WhisperTestPageState extends State<WhisperTestPage> {
   }
 
   Future<void> _onPointerDown() async {
-    appendLog("Checking microphone permission...");
     final ok = await Permissions.ensureMicPermission();
     if (!ok) {
-      appendLog("❌ Microphone permission denied.");
+      appendLog("❌ Permission denied.");
       return;
     }
 
     try {
-      // Uses the new 'startNativeRecording' method
       await _audio.startRecording();
       setState(() => _recording = true);
-      appendLog("🎙️ Recording started (Native)...");
+      appendLog("🎙️ Recording started...");
     } catch (e) {
-      appendLog("❌ Error starting recording: $e");
+      appendLog("❌ Error starting: $e");
     }
   }
 
@@ -75,55 +71,62 @@ class _WhisperTestPageState extends State<WhisperTestPage> {
     if (!_recording) return;
 
     try {
-      final platform = Provider.of<SakhiPlatform>(context, listen: false);
-
-      // Uses the new 'stopNativeRecording' method
+      // 1. Stop Native Recording
       final Uint8List bytes = await _audio.stopRecording();
       setState(() => _recording = false);
+      appendLog("⏹️ Stopped. Captured ${bytes.length} bytes.");
 
-      appendLog("⏹️ Stopped. Captured bytes: ${bytes.length}");
-
-      // --- Debug Checks ---
       if (bytes.isEmpty) {
-        appendLog("⚠️ WARNING: Audio is 0 bytes. Native recorder failed.");
+        appendLog("⚠️ Audio is 0 bytes.");
         return;
       }
-      // --------------------
 
-      appendLog("📝 Sending ${bytes.length} bytes to Whisper...");
+      // 2. PIPELINE INTEGRATION: Navigate to the real processing screen
+      // This passes the raw audio bytes to your AssistProcessingScreen
+      appendLog("🚀 Launching Full Pipeline...");
 
-      // Calls 'transcribeAudio' (which now runs in a background thread)
-      final result = await platform.transcribeAudio(bytes);
-
-      appendLog("📝 TRANSCRIPTION RESULT:");
-      appendLog(">> ${result ?? "<empty>"}");
-    } catch (e, st) {
-      appendLog("❌ Error during transcription: $e");
-      appendLog("$st");
+      if (mounted) {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (_) => AssistProcessingScreen(audioData: bytes),
+          ),
+        );
+      }
+    } catch (e) {
+      appendLog("❌ Error: $e");
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Whisper Test Page")),
+      appBar: AppBar(title: const Text("Sakhi Pipeline Test")),
       body: Column(
         children: [
           const SizedBox(height: 12),
-
-          // FIXED BUTTON: Triggers the safe background loading
           ElevatedButton(
             onPressed: _isLoading ? null : loadModel,
             style: ElevatedButton.styleFrom(
               backgroundColor: _isLoading ? Colors.grey : Colors.blue,
               foregroundColor: Colors.white,
             ),
+            child: Text(_isLoading ? "Loading..." : "1. Initialize Models"),
+          ),
+          const SizedBox(height: 20),
+
+          // INSTRUCTION CARD
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 24.0),
             child: Text(
-              _isLoading ? "Loading..." : "Initialize Models (Run First)",
+              "Hold the red button below to record.\n"
+              "When you release, it will automatically open the Assist Screen and run the full AI pipeline.",
+              textAlign: TextAlign.center,
+              style: TextStyle(color: Colors.grey[700]),
             ),
           ),
 
-          const SizedBox(height: 12),
+          const SizedBox(height: 20),
 
           Center(
             child: Listener(
@@ -132,12 +135,12 @@ class _WhisperTestPageState extends State<WhisperTestPage> {
               child: Container(
                 margin: const EdgeInsets.symmetric(horizontal: 24),
                 padding: const EdgeInsets.symmetric(
-                  vertical: 24,
+                  vertical: 30,
                   horizontal: 24,
                 ),
                 decoration: BoxDecoration(
-                  color: _recording ? Colors.redAccent : Colors.blue,
-                  borderRadius: BorderRadius.circular(24),
+                  color: _recording ? Colors.redAccent : Colors.red,
+                  borderRadius: BorderRadius.circular(100), // Circle shape
                   boxShadow: [
                     BoxShadow(
                       color: Colors.black26,
@@ -146,18 +149,19 @@ class _WhisperTestPageState extends State<WhisperTestPage> {
                     ),
                   ],
                 ),
-                child: Text(
-                  _recording ? "RELEASE TO STOP" : "HOLD TO RECORD",
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                  ),
+                child: Icon(
+                  _recording ? Icons.stop : Icons.mic,
+                  size: 40,
+                  color: Colors.white,
                 ),
               ),
             ),
           ),
           const SizedBox(height: 12),
+          Text(
+            _recording ? "Recording..." : "Hold to Record & Run",
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+          ),
 
           Expanded(
             child: Container(
@@ -165,7 +169,7 @@ class _WhisperTestPageState extends State<WhisperTestPage> {
               padding: const EdgeInsets.all(12),
               color: Colors.black,
               child: SingleChildScrollView(
-                reverse: true, // Auto-scroll to bottom
+                reverse: true,
                 child: Text(
                   logText,
                   style: const TextStyle(
