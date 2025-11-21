@@ -440,6 +440,54 @@
       "languageVersion": "3.4"
     },
     {
+      "name": "record",
+      "rootUri": "file:///C:/Users/punee/AppData/Local/Pub/Cache/hosted/pub.dev/record-6.1.2",
+      "packageUri": "lib/",
+      "languageVersion": "3.5"
+    },
+    {
+      "name": "record_android",
+      "rootUri": "file:///C:/Users/punee/AppData/Local/Pub/Cache/hosted/pub.dev/record_android-1.4.5",
+      "packageUri": "lib/",
+      "languageVersion": "3.5"
+    },
+    {
+      "name": "record_ios",
+      "rootUri": "file:///C:/Users/punee/AppData/Local/Pub/Cache/hosted/pub.dev/record_ios-1.1.5",
+      "packageUri": "lib/",
+      "languageVersion": "3.5"
+    },
+    {
+      "name": "record_linux",
+      "rootUri": "file:///C:/Users/punee/AppData/Local/Pub/Cache/hosted/pub.dev/record_linux-1.2.1",
+      "packageUri": "lib/",
+      "languageVersion": "3.5"
+    },
+    {
+      "name": "record_macos",
+      "rootUri": "file:///C:/Users/punee/AppData/Local/Pub/Cache/hosted/pub.dev/record_macos-1.1.2",
+      "packageUri": "lib/",
+      "languageVersion": "3.5"
+    },
+    {
+      "name": "record_platform_interface",
+      "rootUri": "file:///C:/Users/punee/AppData/Local/Pub/Cache/hosted/pub.dev/record_platform_interface-1.4.0",
+      "packageUri": "lib/",
+      "languageVersion": "3.5"
+    },
+    {
+      "name": "record_web",
+      "rootUri": "file:///C:/Users/punee/AppData/Local/Pub/Cache/hosted/pub.dev/record_web-1.2.2",
+      "packageUri": "lib/",
+      "languageVersion": "3.5"
+    },
+    {
+      "name": "record_windows",
+      "rootUri": "file:///C:/Users/punee/AppData/Local/Pub/Cache/hosted/pub.dev/record_windows-1.0.7",
+      "packageUri": "lib/",
+      "languageVersion": "3.5"
+    },
+    {
       "name": "sky_engine",
       "rootUri": "file:///C:/src/flutter/bin/cache/pkg/sky_engine",
       "packageUri": "lib/",
@@ -534,6 +582,12 @@
       "rootUri": "file:///C:/Users/punee/AppData/Local/Pub/Cache/hosted/pub.dev/typed_data-1.4.0",
       "packageUri": "lib/",
       "languageVersion": "3.5"
+    },
+    {
+      "name": "uuid",
+      "rootUri": "file:///C:/Users/punee/AppData/Local/Pub/Cache/hosted/pub.dev/uuid-4.5.2",
+      "packageUri": "lib/",
+      "languageVersion": "3.0"
     },
     {
       "name": "vector_graphics",

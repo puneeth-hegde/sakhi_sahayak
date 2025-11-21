@@ -9,6 +9,7 @@
 import 'package:flutter_secure_storage_web/flutter_secure_storage_web.dart';
 import 'package:flutter_sound_web/flutter_sound_web.dart';
 import 'package:permission_handler_html/permission_handler_html.dart';
+import 'package:record_web/record_web.dart';
 import 'package:flutter_web_plugins/flutter_web_plugins.dart';
 
 void registerPlugins([final Registrar? pluginRegistrar]) {
@@ -16,5 +17,6 @@ void registerPlugins([final Registrar? pluginRegistrar]) {
   FlutterSecureStorageWeb.registerWith(registrar);
   FlutterSoundPlugin.registerWith(registrar);
   WebPermissionHandler.registerWith(registrar);
+  RecordPluginWeb.registerWith(registrar);
   registrar.registerMessageHandler();
 }

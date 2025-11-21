@@ -6,6 +6,9 @@ set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
 add_compile_options(-fexceptions -funwind-tables -fno-omit-frame-pointer)
 
+# ===========================
+# WHISPER (original block)
+# ===========================
 add_subdirectory(whisper.cpp)
 
 add_library(whisper_jni SHARED
@@ -21,3 +24,8 @@ target_link_libraries(whisper_jni
     android
     log
 )
+
+# ==========================================
+# Llama.cpp — Separate standalone CMake file
+# ==========================================
+include(${CMAKE_CURRENT_SOURCE_DIR}/CMakeLists_llama.txt)

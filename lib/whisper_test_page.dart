@@ -1,9 +1,13 @@
-// lib/whisper_test_page.dart
+import 'dart:io';
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
+import 'package:path_provider/path_provider.dart';
+
 import 'services/audio_service.dart';
+import 'services/model_manager.dart'; // <--- ADDED THIS IMPORT
 import 'utils/permissions.dart';
+import 'platform/sakhi_platform.dart';
 
 class WhisperTestPage extends StatefulWidget {
   @override
@@ -11,25 +15,41 @@ class WhisperTestPage extends StatefulWidget {
 }
 
 class _WhisperTestPageState extends State<WhisperTestPage> {
-  static const MethodChannel _channel = MethodChannel("com.sakhi/native");
   final AudioService _audio = AudioService();
 
   String logText = "";
   bool _recording = false;
+  bool _isLoading = false; // Added to disable button while loading
 
   void appendLog(String msg) {
     setState(() {
-      logText += msg + "\n";
+      logText += "${DateTime.now().toIso8601String()} - $msg\n";
     });
   }
 
+  // FIXED: Now handles both file copying AND native loading
   Future<void> loadModel() async {
-    appendLog("Initializing native models...");
+    if (_isLoading) return;
+
+    setState(() => _isLoading = true);
+    appendLog("STEP 1: Copying model files from assets...");
+
     try {
-      final res = await _channel.invokeMethod('initialize');
-      appendLog("initialize => $res");
+      // 1. Copy large files (was causing the startup crash)
+      await ModelManager.prepareModels();
+      appendLog("✅ Models copied to internal storage.");
+
+      appendLog("STEP 2: Initializing Native Whisper Engine...");
+
+      // 2. Load the model into C++ memory (via background thread in Kotlin)
+      final platform = Provider.of<SakhiPlatform>(context, listen: false);
+      final res = await platform.initialize();
+
+      appendLog("✅ Whisper Loaded Successfully => $res");
     } catch (e) {
-      appendLog("Error initialize: $e");
+      appendLog("❌ Error loading models: $e");
+    } finally {
+      setState(() => _isLoading = false);
     }
   }
 
@@ -42,11 +62,12 @@ class _WhisperTestPageState extends State<WhisperTestPage> {
     }
 
     try {
+      // Uses the new 'startNativeRecording' method
       await _audio.startRecording();
       setState(() => _recording = true);
-      appendLog("Recording... (release to stop)");
+      appendLog("🎙️ Recording started (Native)...");
     } catch (e) {
-      appendLog("Error starting recording: $e");
+      appendLog("❌ Error starting recording: $e");
     }
   }
 
@@ -54,20 +75,31 @@ class _WhisperTestPageState extends State<WhisperTestPage> {
     if (!_recording) return;
 
     try {
+      final platform = Provider.of<SakhiPlatform>(context, listen: false);
+
+      // Uses the new 'stopNativeRecording' method
       final Uint8List bytes = await _audio.stopRecording();
       setState(() => _recording = false);
 
-      appendLog("Captured bytes: ${bytes.length}");
-      appendLog("Sending to native transcribe...");
+      appendLog("⏹️ Stopped. Captured bytes: ${bytes.length}");
 
-      final result = await _channel.invokeMethod('transcribe', {
-        'audioData': bytes,
-        'sampleRate': 16000,
-      });
+      // --- Debug Checks ---
+      if (bytes.isEmpty) {
+        appendLog("⚠️ WARNING: Audio is 0 bytes. Native recorder failed.");
+        return;
+      }
+      // --------------------
 
-      appendLog("Transcription: $result");
-    } catch (e) {
-      appendLog("Error stopping/transcribing: $e");
+      appendLog("📝 Sending ${bytes.length} bytes to Whisper...");
+
+      // Calls 'transcribeAudio' (which now runs in a background thread)
+      final result = await platform.transcribeAudio(bytes);
+
+      appendLog("📝 TRANSCRIPTION RESULT:");
+      appendLog(">> ${result ?? "<empty>"}");
+    } catch (e, st) {
+      appendLog("❌ Error during transcription: $e");
+      appendLog("$st");
     }
   }
 
@@ -78,7 +110,19 @@ class _WhisperTestPageState extends State<WhisperTestPage> {
       body: Column(
         children: [
           const SizedBox(height: 12),
-          ElevatedButton(onPressed: loadModel, child: const Text("Load Model")),
+
+          // FIXED BUTTON: Triggers the safe background loading
+          ElevatedButton(
+            onPressed: _isLoading ? null : loadModel,
+            style: ElevatedButton.styleFrom(
+              backgroundColor: _isLoading ? Colors.grey : Colors.blue,
+              foregroundColor: Colors.white,
+            ),
+            child: Text(
+              _isLoading ? "Loading..." : "Initialize Models (Run First)",
+            ),
+          ),
+
           const SizedBox(height: 12),
 
           Center(
@@ -88,18 +132,27 @@ class _WhisperTestPageState extends State<WhisperTestPage> {
               child: Container(
                 margin: const EdgeInsets.symmetric(horizontal: 24),
                 padding: const EdgeInsets.symmetric(
-                  vertical: 18,
+                  vertical: 24,
                   horizontal: 24,
                 ),
                 decoration: BoxDecoration(
                   color: _recording ? Colors.redAccent : Colors.blue,
                   borderRadius: BorderRadius.circular(24),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black26,
+                      blurRadius: 10,
+                      offset: Offset(0, 4),
+                    ),
+                  ],
                 ),
                 child: Text(
-                  _recording
-                      ? "Recording... release to stop"
-                      : "Press & Hold to Record",
-                  style: const TextStyle(color: Colors.white, fontSize: 16),
+                  _recording ? "RELEASE TO STOP" : "HOLD TO RECORD",
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
             ),
@@ -108,15 +161,17 @@ class _WhisperTestPageState extends State<WhisperTestPage> {
 
           Expanded(
             child: Container(
+              width: double.infinity,
               padding: const EdgeInsets.all(12),
               color: Colors.black,
               child: SingleChildScrollView(
+                reverse: true, // Auto-scroll to bottom
                 child: Text(
                   logText,
                   style: const TextStyle(
                     color: Colors.greenAccent,
                     fontFamily: "monospace",
-                    fontSize: 14,
+                    fontSize: 13,
                   ),
                 ),
               ),

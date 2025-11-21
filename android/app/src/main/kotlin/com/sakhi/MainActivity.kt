@@ -1,12 +1,13 @@
 package com.sakhi
 
-import android.os.Bundle
 import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.plugin.common.MethodChannel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.io.File
+import java.io.FileOutputStream
 
 class MainActivity : FlutterActivity() {
     private val CHANNEL = "com.sakhi/native"
@@ -18,6 +19,10 @@ class MainActivity : FlutterActivity() {
     override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
         super.configureFlutterEngine(flutterEngine)
 
+        // REGISTER NEW WHISPER PLUGIN (com.sakhi.whisper)
+        flutterEngine.plugins.add(SakhiPlugin())
+
+        // REGISTER OLD PLATFORM CHANNEL (com.sakhi/native)
         MethodChannel(flutterEngine.dartExecutor.binaryMessenger, CHANNEL)
             .setMethodCallHandler { call, result ->
                 when (call.method) {
@@ -29,13 +34,17 @@ class MainActivity : FlutterActivity() {
                                 llmRunner = LLMRunner(this@MainActivity)
                                 ttsEngine = TTSEngine(this@MainActivity)
 
-                                // ✅ corrected call name
                                 sttEngine!!.loadWhisperModel()
+
+                                val llamaPath = copyModelFromAssets("llama_1b_q4.gguf")
+                                llmRunner!!.loadModel(llamaPath)
+
+                                ttsEngine!!.loadModel()
 
                                 runOnUiThread { result.success(true) }
                             } catch (t: Throwable) {
                                 runOnUiThread {
-                                    result.error("INIT_ERROR", t.message ?: "unknown", null)
+                                    result.error("INIT_ERROR", t.message, null)
                                 }
                             }
                         }
@@ -55,9 +64,46 @@ class MainActivity : FlutterActivity() {
                                 runOnUiThread { result.success(text) }
                             } catch (e: Throwable) {
                                 runOnUiThread {
-                                    result.error("TRANSCRIBE_ERR", e.message ?: "error", null)
+                                    result.error("TRANSCRIBE_ERR", e.message, null)
                                 }
                             }
+                        }
+                    }
+
+                    "simplify" -> {
+                        val text = call.argument<String>("text")
+                        val prefs = call.argument<Map<String, Any>>("preferences")
+
+                        if (llmRunner == null) {
+                            result.error("NOT_INITIALIZED", "LLM runner not initialized", null)
+                            return@setMethodCallHandler
+                        }
+
+                        CoroutineScope(Dispatchers.IO).launch {
+                            try {
+                                val steps = llmRunner!!.simplify(text, prefs)
+                                runOnUiThread { result.success(steps) }
+                            } catch (e: Throwable) {
+                                runOnUiThread {
+                                    result.error("LLM_ERR", e.message, null)
+                                }
+                            }
+                        }
+                    }
+
+                    "speak" -> {
+                        val text = call.argument<String>("text") ?: ""
+                        val speed =
+                            (call.argument<Double>("speed") ?: 1.0).toFloat()
+
+                        if (ttsEngine == null) {
+                            result.error("NOT_INITIALIZED", "TTS engine not initialized", null)
+                            return@setMethodCallHandler
+                        }
+
+                        CoroutineScope(Dispatchers.IO).launch {
+                            val ok = ttsEngine!!.speak(text, speed)
+                            runOnUiThread { result.success(ok) }
                         }
                     }
 
@@ -66,7 +112,18 @@ class MainActivity : FlutterActivity() {
             }
     }
 
-    // PCM16 little-endian ByteArray -> FloatArray (-1.0 .. 1.0)
+    private fun copyModelFromAssets(name: String): String {
+        val outFile = File(filesDir, name)
+        if (!outFile.exists() || outFile.length() == 0L) {
+            assets.open(name).use { input ->
+                FileOutputStream(outFile).use { output ->
+                    input.copyTo(output)
+                }
+            }
+        }
+        return outFile.absolutePath
+    }
+
     private fun pcm16ToFloat(bytes: ByteArray?): FloatArray {
         if (bytes == null || bytes.isEmpty()) return FloatArray(0)
         val out = FloatArray(bytes.size / 2)
@@ -76,7 +133,6 @@ class MainActivity : FlutterActivity() {
             val low = bytes[i].toInt() and 0xFF
             val high = bytes[i + 1].toInt()
             val sample = (high shl 8) or low
-            // convert signed 16-bit to float
             val signed = if (sample > 32767) sample - 65536 else sample
             out[j] = signed / 32768f
             i += 2
