@@ -10,7 +10,7 @@ class IntentResult {
 }
 
 class IntentDetector {
-  // Assist keywords (English + Hindi)
+  // Assist keywords (General help)
   static const List<String> assistKeywords = [
     'how',
     'what',
@@ -23,41 +23,35 @@ class IntentDetector {
     'sick',
     'treatment',
     'medicine',
+    'scheme',
+    'government',
+    'apply',
     'kaise',
     'kya',
     'kab',
     'kahan',
     'madad',
     'bimaar',
+    'yojna'
   ];
 
-  // Report keywords (English + Hindi)
+  // Report keywords (Safety & Emergency)
+  // EXPANDED LIST for better detection
   static const List<String> reportKeywords = [
-    'harass',
-    'assault',
-    'touch',
-    'touched',
-    'followed',
-    'stole',
-    'threat',
-    'violence',
-    'abuse',
-    'rape',
-    'attack',
-    'pareshan',
-    'mara',
-    'chhua',
-    'peecha',
-    'dhoka',
-    'maar',
-    'followed me',
-    'touched me',
-    'attacked me',
+    'harass', 'assault', 'touch', 'touched', 'follow', 'followed', 'following',
+    'stole', 'stealing', 'threat', 'threatened', 'violence', 'abuse', 'rape',
+    'attack', 'attacked', 'attacking', 'danger', 'scared', 'afraid',
+    'emergency',
+    'police', 'help me', 'save me',
+    // Hindi / Hinglish
+    'pareshan', 'mara', 'chhua', 'peecha', 'dhoka', 'maar', 'bachao', 'dar',
+    'police', 'gunda'
   ];
 
   final double reportThreshold;
 
-  IntentDetector({this.reportThreshold = 0.6});
+  // Lowered threshold slightly to prioritize safety
+  IntentDetector({this.reportThreshold = 0.4});
 
   Future<IntentResult> detectIntent(String text) async {
     final s = text.toLowerCase().trim();
@@ -68,31 +62,29 @@ class IntentDetector {
     int assistScore = 0;
     int reportScore = 0;
 
+    // 1. Token Match
     for (final token in tokens) {
       if (assistKeywords.contains(token)) assistScore += 1;
-      if (reportKeywords.contains(token)) reportScore += 4;
+      // Check for partial matches for safety keywords (e.g., "following" contains "follow")
+      if (reportKeywords.any((k) => token.contains(k))) reportScore += 5;
     }
 
-    // phrase-level check
+    // 2. Phrase Match (Stronger Signal)
     for (final phrase in reportKeywords.where((p) => p.contains(' '))) {
-      if (s.contains(phrase)) reportScore += 4;
+      if (s.contains(phrase)) reportScore += 10;
     }
 
     final total = max(1, assistScore + reportScore);
     final reportConf = reportScore / total;
     final assistConf = assistScore / total;
 
-    // High-confidence report → force report
-    if (reportConf >= reportThreshold && reportScore > assistScore) {
-      return IntentResult(intent: IntentType.report, confidence: reportConf);
+    // SAFETY FIRST LOGIC:
+    // If any strong report keyword is found, bias heavily towards report
+    if (reportScore > 0) {
+      return IntentResult(intent: IntentType.report, confidence: 0.9);
     }
 
-    // Assist detected normally
-    if (assistScore > 0) {
-      return IntentResult(intent: IntentType.assist, confidence: assistConf);
-    }
-
-    // fallback → default assist with low confidence
-    return IntentResult(intent: IntentType.assist, confidence: 0.35);
+    // Default to Assist if no safety keywords found
+    return IntentResult(intent: IntentType.assist, confidence: 0.8);
   }
 }

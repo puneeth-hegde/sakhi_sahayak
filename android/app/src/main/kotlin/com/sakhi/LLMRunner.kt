@@ -7,8 +7,7 @@ class LLMRunner(private val context: Context) {
 
     init {
         try {
-            System.loadLibrary("llama_jni")   // load wrapper library
-   // Load native llama library
+            System.loadLibrary("llama_jni")
             Log.i("LLMRunner", "llama native library loaded")
         } catch (e: UnsatisfiedLinkError) {
             Log.e("LLMRunner", "Failed to load llama library: ${e.message}")
@@ -17,15 +16,9 @@ class LLMRunner(private val context: Context) {
 
     private var isLoaded = false
 
-    // --------------------------
-    // JNI METHODS (from C++)
-    // --------------------------
     private external fun initModel(modelPath: String): Boolean
     private external fun infer(prompt: String): String
 
-    // --------------------------
-    // PUBLIC API
-    // --------------------------
     fun loadModel(modelPath: String): Boolean {
         Log.i("LLMRunner", "Loading model at: $modelPath")
         val ok = initModel(modelPath)
@@ -40,17 +33,54 @@ class LLMRunner(private val context: Context) {
         }
 
         val input = text ?: ""
-        val prompt = "Simplify this medical text:\n$input\n"
+        
+        // STRATEGY: Standard Q&A Prompt
+        val prompt = """
+Question: $input
+Answer (Short & Direct):
+""".trim()
 
-        val raw = infer(prompt)
+        Log.i("LLMRunner", "START Inference with prompt: $prompt")
+        val startTime = System.currentTimeMillis()
+        
+        var rawResponse = infer(prompt)
+        
+        val duration = System.currentTimeMillis() - startTime
+        Log.i("LLMRunner", "END Inference. Took ${duration}ms")
 
-        // Wrap output in your existing “steps” format
-        val result = mapOf(
+        // ---------------------------------------------------------
+        // NUCLEAR CLEANUP: Forcefully cut off hallucinations
+        // ---------------------------------------------------------
+        var cleanText = rawResponse
+            .replace(prompt, "")
+            .replace("Question:", "")
+            .replace("Answer:", "")
+            .replace("Sakhi:", "")
+            .replace("User:", "")
+            .replace("(smiling)", "")
+            .replace("(thinking)", "")
+            .trim()
+
+        // Stop at the first new line if it tries to start a new paragraph/role
+        if (cleanText.contains("\n")) {
+            cleanText = cleanText.substringBefore("\n").trim()
+        }
+        
+        // Stop if it tries to ask a question back (hallucination)
+        if (cleanText.contains("?")) {
+             // Usually implies it's starting a new turn like "Did that help?"
+             // For 1B model, often safer to just take the statement before the question.
+             // But let's leave it if it's short.
+        }
+
+        if (cleanText.isEmpty()) {
+            cleanText = "I heard you, but I am not sure how to answer. Please ask again."
+        }
+
+        return mapOf(
             "steps" to listOf(
-                mapOf("id" to 1, "text" to raw)
+                mapOf("id" to 1, "text" to cleanText)
             )
         )
-
-        return result
     }
 }

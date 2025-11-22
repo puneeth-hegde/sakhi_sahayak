@@ -1,36 +1,48 @@
 name: sakhi_sahayak
-description: "A new Flutter project."
+description: "Sakhi Sahayak - Offline AI Assistant"
 publish_to: 'none'
 
 version: 1.0.0+1
 
 environment:
-  sdk: ^3.10.0
+  sdk: ">=3.0.0 <4.0.0"
 
 dependencies:
   flutter:
     sdk: flutter
-
-  flutter_sound: ^9.2.13
-  permission_handler: ^11.0.1
-  sqflite: ^2.3.0
-  path_provider: ^2.1.1
-  flutter_secure_storage: ^9.0.0
-  dio: ^5.4.0
+  
+  geolocator: ^10.1.0
+  # Core State Management
   provider: ^6.1.1
-  flutter_svg: ^2.0.9
-  record: ^6.1.2
+  
+  # Local Storage (REQUIRED for Reporting)
+  shared_preferences: ^2.2.2
+  
+  # Permissions (Microphone)
+  permission_handler: ^11.3.0
+  
+  # File System Access
+  path_provider: ^2.1.2
+  
+  # SVG Support (Optional but good for icons)
+  flutter_svg: ^2.0.10
+
+  # NOTE: Removed 'flutter_sound' and 'record' because 
+  # we are using your custom 'SakhiPlugin' for native recording.
+  # Removed 'dio' and 'flutter_secure_storage' if not strictly used yet 
+  # to keep the build clean. Add them back only if you use them.
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  mockito: ^5.4.4
-  integration_test:
-    sdk: flutter
+  flutter_lints: ^3.0.0
 
 flutter:
   uses-material-design: true
+  
+  # ASSETS REGISTRATION
   assets:
     - assets/models/
     - assets/icons/
-
+    - assets/images/logo.jpg
+  

@@ -4,7 +4,6 @@ import android.content.Context
 import android.media.AudioFormat
 import android.media.AudioRecord
 import android.media.MediaRecorder
-import android.util.Log
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
@@ -17,7 +16,6 @@ class SakhiPlugin : FlutterPlugin, MethodChannel.MethodCallHandler {
     private lateinit var channel: MethodChannel
     private lateinit var context: Context
     
-    // The 3 Core Engines
     private lateinit var recorder: NativeRecorder
     private lateinit var sttEngine: STTEngine
     private lateinit var llmRunner: LLMRunner
@@ -28,7 +26,6 @@ class SakhiPlugin : FlutterPlugin, MethodChannel.MethodCallHandler {
         channel = MethodChannel(binding.binaryMessenger, "com.sakhi.whisper")
         channel.setMethodCallHandler(this)
 
-        // Initialize Engines using the classes you provided
         recorder = NativeRecorder()
         sttEngine = STTEngine(context)
         llmRunner = LLMRunner(context)
@@ -37,30 +34,16 @@ class SakhiPlugin : FlutterPlugin, MethodChannel.MethodCallHandler {
 
     override fun onMethodCall(call: MethodCall, result: MethodChannel.Result) {
         when (call.method) {
-            // -------------------------------------------------------
-            // 1. INITIALIZATION (Loads Whisper + LLaMA + TTS)
-            // -------------------------------------------------------
             "loadModel" -> {
                 Thread {
                     try {
-                        // A. Load Whisper
                         sttEngine.loadWhisperModel()
-                        
-                        // B. Load TTS
                         ttsEngine.loadModel()
-
-                        // C. Load LLaMA (LLM)
                         val modelDir = File(context.filesDir, "models")
                         val llamaFile = File(modelDir, "llama_1b_q4.gguf")
-                        
                         if (llamaFile.exists()) {
-                            val llmLoaded = llmRunner.loadModel(llamaFile.absolutePath)
-                            Log.i("SakhiPlugin", "LLaMA Loaded: $llmLoaded")
-                        } else {
-                            Log.e("SakhiPlugin", "LLaMA model file NOT found at ${llamaFile.absolutePath}")
+                            llmRunner.loadModel(llamaFile.absolutePath)
                         }
-
-                        // Success callback
                         android.os.Handler(android.os.Looper.getMainLooper()).post {
                             result.success(true)
                         }
@@ -72,9 +55,6 @@ class SakhiPlugin : FlutterPlugin, MethodChannel.MethodCallHandler {
                 }.start()
             }
 
-            // -------------------------------------------------------
-            // 2. AUDIO RECORDING (Native)
-            // -------------------------------------------------------
             "startNativeRecording" -> {
                 recorder.start()
                 result.success(true)
@@ -85,9 +65,6 @@ class SakhiPlugin : FlutterPlugin, MethodChannel.MethodCallHandler {
                 result.success(bytes)
             }
 
-            // -------------------------------------------------------
-            // 3. SPEECH-TO-TEXT (Whisper)
-            // -------------------------------------------------------
             "transcribeAudio" -> {
                 val audioBytes = call.arguments as ByteArray
                 Thread {
@@ -99,19 +76,13 @@ class SakhiPlugin : FlutterPlugin, MethodChannel.MethodCallHandler {
                 }.start()
             }
 
-            // -------------------------------------------------------
-            // 4. LLM TEXT SIMPLIFICATION (The Brain)
-            // -------------------------------------------------------
-            "simplifyText" -> {
+            // Listen for "simplify" AND "simplifyText" to be safe
+            "simplify", "simplifyText" -> {
                 val text = call.argument<String>("text")
-                // Handle nested maps from Dart carefully
                 val prefs = call.argument<Map<String, Any>>("prefs")
-                
                 Thread {
                     try {
-                        // Call your LLMRunner class
                         val output = llmRunner.simplify(text, prefs)
-                        
                         android.os.Handler(android.os.Looper.getMainLooper()).post {
                             result.success(output)
                         }
@@ -123,14 +94,10 @@ class SakhiPlugin : FlutterPlugin, MethodChannel.MethodCallHandler {
                 }.start()
             }
 
-            // -------------------------------------------------------
-            // 5. TTS (The Mouth)
-            // -------------------------------------------------------
-            "speakText" -> {
+            // Listen for "speak" AND "speakText" to be safe
+            "speak", "speakText" -> {
                 val text = call.argument<String>("text") ?: ""
                 val speed = call.argument<Double>("speed")?.toFloat() ?: 1.0f
-                
-                // Call your TTSEngine class
                 ttsEngine.speak(text, speed)
                 result.success(true)
             }
@@ -139,19 +106,13 @@ class SakhiPlugin : FlutterPlugin, MethodChannel.MethodCallHandler {
         }
     }
 
-    // -------------------------------------------------------
-    // HELPER: Audio Recorder (Your Fixed Code)
-    // -------------------------------------------------------
     class NativeRecorder {
         private val sampleRate = 16000
         private val channelConfig = AudioFormat.CHANNEL_IN_MONO
         private val encoding = AudioFormat.ENCODING_PCM_16BIT
-
         private var audioRecord: AudioRecord? = null
         private var recordingThread: Thread? = null
-        
         val isRecording = AtomicBoolean(false)
-        
         private val audioOutput = ByteArrayOutputStream()
 
         fun start() {
@@ -159,12 +120,9 @@ class SakhiPlugin : FlutterPlugin, MethodChannel.MethodCallHandler {
             val bufferSize = AudioRecord.getMinBufferSize(sampleRate, channelConfig, encoding)
             try {
                 audioRecord = AudioRecord(MediaRecorder.AudioSource.MIC, sampleRate, channelConfig, encoding, bufferSize)
-                if (audioRecord?.state != AudioRecord.STATE_INITIALIZED) throw RuntimeException("AudioRecord init failed")
-                
                 audioOutput.reset()
                 isRecording.set(true)
                 audioRecord?.startRecording()
-
                 recordingThread = Thread {
                     val buffer = ByteArray(bufferSize)
                     while (isRecording.get()) {
@@ -175,17 +133,14 @@ class SakhiPlugin : FlutterPlugin, MethodChannel.MethodCallHandler {
                     }
                 }
                 recordingThread?.start()
-            } catch (e: Exception) {
-                e.printStackTrace()
-                isRecording.set(false)
-            }
+            } catch (e: Exception) { isRecording.set(false) }
         }
 
         fun stop(): ByteArray {
             if (!isRecording.get()) return ByteArray(0)
             isRecording.set(false)
-            try { recordingThread?.join(1000) } catch (e: Exception) { e.printStackTrace() }
-            try { audioRecord?.stop(); audioRecord?.release() } catch (e: Exception) { e.printStackTrace() }
+            try { recordingThread?.join(1000) } catch (e: Exception) {}
+            try { audioRecord?.stop(); audioRecord?.release() } catch (e: Exception) {}
             finally { audioRecord = null; recordingThread = null }
             synchronized(audioOutput) { return audioOutput.toByteArray() }
         }
@@ -194,16 +149,13 @@ class SakhiPlugin : FlutterPlugin, MethodChannel.MethodCallHandler {
     private fun pcm16ToFloat(bytes: ByteArray): FloatArray {
         val outLen = bytes.size / 2
         val out = FloatArray(outLen)
-        var i = 0
         var j = 0
-        while (i + 1 < bytes.size) {
+        for (i in 0 until bytes.size step 2) {
             val low = bytes[i].toInt() and 0xFF
             val high = bytes[i + 1].toInt()
             val sample = (high shl 8) or low
             val signed = if (sample > 32767) sample - 65536 else sample
-            out[j] = signed / 32768f
-            i += 2
-            j++
+            out[j++] = signed / 32768f
         }
         return out
     }
