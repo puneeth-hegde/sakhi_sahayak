@@ -34,47 +34,43 @@ class LLMRunner(private val context: Context) {
 
         val input = text ?: ""
         
-        // STRATEGY: Standard Q&A Prompt
-        val prompt = """
-Question: $input
-Answer (Short & Direct):
-""".trim()
+        // =========================================================================
+        // IMPROVED PROMPT STRUCTURE
+        // Works with stop sequences defined in C++
+        // =========================================================================
+        val prompt = """Question: $input
+Answer:""".trimIndent()  // Note: No space after "Answer:" helps with stopping
 
         Log.i("LLMRunner", "START Inference with prompt: $prompt")
         val startTime = System.currentTimeMillis()
         
-        var rawResponse = infer(prompt)
+        // Call C++ inference - now returns ONLY the generated answer
+        var cleanText = infer(prompt)
         
         val duration = System.currentTimeMillis() - startTime
         Log.i("LLMRunner", "END Inference. Took ${duration}ms")
 
-        // ---------------------------------------------------------
-        // NUCLEAR CLEANUP: Forcefully cut off hallucinations
-        // ---------------------------------------------------------
-        var cleanText = rawResponse
-            .replace(prompt, "")
-            .replace("Question:", "")
-            .replace("Answer:", "")
-            .replace("Sakhi:", "")
-            .replace("User:", "")
-            .replace("(smiling)", "")
-            .replace("(thinking)", "")
+        // =========================================================================
+        // MINIMAL CLEANUP - C++ already handles stop sequences!
+        // =========================================================================
+        cleanText = cleanText
+            .trim()
+            .removePrefix("Answer:")  // Just in case
+            .removePrefix(":")
             .trim()
 
-        // Stop at the first new line if it tries to start a new paragraph/role
-        if (cleanText.contains("\n")) {
-            cleanText = cleanText.substringBefore("\n").trim()
-        }
-        
-        // Stop if it tries to ask a question back (hallucination)
-        if (cleanText.contains("?")) {
-             // Usually implies it's starting a new turn like "Did that help?"
-             // For 1B model, often safer to just take the statement before the question.
-             // But let's leave it if it's short.
+        // Safety fallback for empty responses
+        if (cleanText.isEmpty() || cleanText.length < 3) {
+            cleanText = "I'm not sure how to answer that. Could you rephrase your question?"
         }
 
-        if (cleanText.isEmpty()) {
-            cleanText = "I heard you, but I am not sure how to answer. Please ask again."
+        // Optional: Remove any remaining role markers (paranoid check)
+        val forbiddenPhrases = listOf("Question:", "User:", "Sakhi:", "(smiling)", "(thinking)")
+        for (phrase in forbiddenPhrases) {
+            if (cleanText.contains(phrase, ignoreCase = true)) {
+                cleanText = cleanText.substringBefore(phrase).trim()
+                Log.w("LLMRunner", "Found forbidden phrase '$phrase', truncated response")
+            }
         }
 
         return mapOf(
@@ -82,5 +78,23 @@ Answer (Short & Direct):
                 mapOf("id" to 1, "text" to cleanText)
             )
         )
+    }
+
+    // =========================================================================
+    // OPTIONAL: Advanced inference with custom parameters
+    // =========================================================================
+    fun inferWithParams(
+        prompt: String,
+        temperature: Float = 0.7f,
+        maxTokens: Int = 200
+    ): String {
+        if (!isLoaded) {
+            Log.e("LLMRunner", "Model not loaded")
+            return ""
+        }
+        
+        // For now, we use the default C++ parameters
+        // You can extend this by creating a new JNI method that accepts parameters
+        return infer(prompt)
     }
 }
