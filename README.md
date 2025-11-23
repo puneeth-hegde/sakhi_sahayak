@@ -253,22 +253,18 @@ The entire pipeline runs offline.
 
 # 7. Screens Overview
 
-## 7.1 Whisper Test Page
-
-Used for testing model load and audio quality.
-
-## 7.2 Assist Processing Screen
+## 7.1 Assist Processing Screen
 
 * Receives STT output
 * Runs intent detection
 * Runs LLaMA simplifier
 * Maps steps to pictograms
 
-## 7.3 Assist Result Screen
+## 7.2 Assist Result Screen
 
 Displays simplified steps and icons.
 
-## 7.4 Report Processing Screen
+## 7.3 Report Processing Screen
 
 Triggered when intent confidence indicates a safety or incident report.
 
