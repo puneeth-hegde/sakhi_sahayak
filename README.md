@@ -1,368 +1,124 @@
-# **Sakhi Sahayak — Offline AI Village Assistant**
+# Sakhi Sahayak
 
-**Team:** Git It Done
-**Version:** 1.0
+Offline AI Village Assistant built by Team Git It Done for a hackathon prototype that reached the semifinals. The project was designed for rural and low-connectivity settings, where users need practical voice-driven help without depending on cloud services. The core idea remains the same: keep the entire experience on-device, private, and usable on low-end Android phones.
 
-Sakhi Sahayak is an offline, privacy-first AI assistant designed for rural and low-connectivity regions. It performs speech-to-text, intent detection, task simplification, and text-to-speech entirely on the device using on-device inference (Whisper, LLaMA, and offline TTS).
+## What the app does
 
-This README provides complete setup instructions, architecture explanation, project flow, and developer notes.
+Sakhi Sahayak is an offline assistant that can:
+- record speech on demand,
+- transcribe audio locally,
+- detect whether a request is general help or an emergency/report,
+- retrieve grounded knowledge from local JSON documents,
+- simplify answers into clear steps,
+- speak the response back to the user,
+- save incident reports securely on the device.
 
----
+The app is intended for everyday village use cases such as government schemes, health guidance, agriculture basics, and incident reporting.
 
-# 1. Overview
+## Current capabilities
 
-Sakhi Sahayak solves a key challenge in rural India:
-Providing accurate, accessible, low-literacy-friendly digital assistance **without requiring internet access**.
+### Assist mode
+The app listens to a spoken request, converts it to text, searches the local knowledge base, and passes the retrieved context into the on-device language model for a short, practical response.
 
-Features include:
+### Report mode
+If the request looks like a safety or incident report, the app routes to the report flow, stores the report locally with secure device storage, and keeps the data offline.
 
-* Offline speech recognition using Whisper
-* Intent detection for Assist vs Report mode
-* Local LLaMA inference for step-by-step task simplification
-* Pictogram-based visual guidance
-* Offline text-to-speech
-* No cloud services or external APIs
+### Retrieval stack
+The retrieval pipeline uses two layers:
+- keyword matching for fast exact or near-exact lookup,
+- offline vector fallback for semantic matching when the keyword path is weak.
 
-The full AI pipeline runs entirely on-device.
+### Offline embeddings
+The query embedding and the stored chunk vectors use the same fully offline deterministic encoder. This keeps the app self-contained and avoids any server dependency.
 
----
+## Hackathon history
 
-# 2. Project Structure
+This project started as a hackathon team effort by Team Git It Done. The prototype made it to the second round and reached the semifinals. It did not advance to the finals, but it proved that a practical offline assistant for rural users was feasible.
 
-```
-lib/
-  main.dart
-  whisper_test_page.dart
-  platform/
-    sakhi_platform.dart
-    sakhi_platform_android.dart
-    sakhi_platform_windows.dart
-  services/
-    audio_service.dart
-    model_manager.dart
-    pictogram_mapper.dart
-    intent_detector.dart
-  screens/
-    assist_processing_screen.dart
-    assist_result_screen.dart
-    report_processing_screen.dart
+That context still matters here: the app is still being shaped as a field-ready prototype, but it is now substantially more grounded and useful than the early version.
 
-android/
-  app/src/main/kotlin/com/sakhi/
-      MainActivity.kt
-      SakhiPlugin.kt
-      STTEngine.kt
-      LLMRunner.kt
-      TTSEngine.kt
-```
+## How the app works
 
----
+1. The user presses and holds the microphone button.
+2. Native audio capture records speech.
+3. Whisper converts speech to text locally.
+4. Intent detection decides whether the request is assist or report.
+5. Assist requests are routed through the local knowledge retrieval stack.
+6. Retrieved chunks are passed to the on-device LLM for grounded output.
+7. The result is shown as step cards and spoken back to the user.
+8. Report requests are saved securely on-device for later review.
 
-# 3. Technology Stack
+## Knowledge base
 
-### Flutter
+The knowledge base is stored as JSON documents under `assets/knowledge/documents/` and indexed through `assets/knowledge/documents/index.json`.
 
-* Flutter 3.38.1
-* Provider for state management
+The vector index is stored in:
+- `assets/knowledge/vectors.json`
 
-### Native Android (Kotlin)
+The current KB focuses on practical rural topics such as:
+- health and first-response guidance,
+- government schemes and welfare support,
+- agriculture and seasonal crop information,
+- basic sanitation and nutrition topics.
 
-* Custom MethodChannel plugin
-* AudioRecord for reliable PCM capture
-* JNI bindings for:
+## Security and privacy
 
-  * Whisper STT
-  * LLaMA 1B Q4
-  * Offline TTS
+- No cloud inference.
+- No external API calls.
+- No user audio sent to a server.
+- Reports are stored locally using secure device storage.
+- Large model files are handled separately from normal source files.
 
-### ML Models
+## Models bundled with the app
 
-* Whisper Tiny Q8 (quantized STT model)
-* LLaMA 1B Q4 (quantized text simplification model)
-* Offline TTS
+The app includes offline model assets for speech recognition and answer generation. These files are large, so the repository uses Git LFS rules for the binary model formats.
 
-All models run fully on-device.
+## Build and run
 
----
+### Prerequisites
+- Flutter SDK installed
+- Android SDK installed
+- Android device or emulator
+- Sufficient free storage for the model assets
 
-# 4. Installing & Running the Project
+### Platform notes
 
-## 4.1 Prerequisites
+**Windows build caveat:** This repository uses symlinks for native C++ sources (e.g., `whisper.cpp` linking to the vendored source in `android/native/third_party/whisper_cpp/`). Symlinks are portable in Git on Linux and macOS, but may not resolve correctly on Windows without additional configuration. If building on Windows, ensure your Git is configured to support symlinks (`git config core.symlinks true`), or consider using WSL2.
 
-1. Flutter 3.38.x installed
-2. Android SDK (API 33+)
-3. 4GB RAM device recommended
-4. Model files placed in:
+### Build release APK
 
-```
-assets/models/
-    whisper_tiny_q8.bin
-    llama_1b_q4.gguf
-```
-
-Ensure `pubspec.yaml` contains:
-
-```
-flutter:
-  assets:
-    - assets/models/
-```
-
----
-
-## 4.2 Setup Instructions
-
-### Step 1 — Install dependencies
-
-```
+```bash
 flutter pub get
-```
-
-### Step 2 — Clean build artifacts
-
-```
-flutter clean
-```
-
-### Step 3 — Build APK
-
-```
 flutter build apk --release
 ```
 
-### Step 4 — Install on device
+### Install on a device
 
-```
+```bash
 adb install build/app/outputs/flutter-apk/app-release.apk
 ```
 
-### Step 5 — Run app from device
+## Repository layout
 
-The models will be copied into internal storage at first launch.
+- `lib/` - Flutter app code
+- `android/` - Android native code and JNI bindings
+- `assets/knowledge/` - local knowledge base and vector index
+- `assets/models/` - offline model assets
+- `assets/scripts/` - local generation and validation scripts
 
----
+## Release notes
 
-# 5. Main Components Explained
+The current release emphasizes:
+- fully offline operation,
+- grounded retrieval from a curated local KB,
+- emergency report handling,
+- secure local report storage,
+- production release packaging.
 
-## 5.1 Audio Recorder (Native)
+## Team
 
-Implemented using Android AudioRecord for reliability.
-
-* PCM16
-* 16000 Hz
-* Mono
-* Low-latency
-* Works across Samsung, Xiaomi, Motorola, etc.
-
-Data is sent to Flutter as raw bytes for STT.
-
----
-
-## 5.2 Whisper STT Engine
-
-Located in:
-
-```
-android/app/src/main/kotlin/com/sakhi/STTEngine.kt
-```
-
-Pipeline:
-
-1. Load Whisper model (nativeLoadModel)
-2. Convert PCM16 → Float32
-3. Run inference through JNI
-4. Return transcribed text to Flutter
-
-Whisper runs entirely offline.
-
----
-
-## 5.3 Intent Detection
-
-Located in:
-
-```
-lib/services/intent_detector.dart
-```
-
-Detects:
-
-* Assist Query
-* Report Intent
-* Noise / Gibberish
-
-Uses lightweight semantic similarity and thresholds.
-
----
-
-## 5.4 LLaMA 1B Q4 Simplifier
-
-Located in:
-
-```
-android/app/src/main/kotlin/com/sakhi/LLMRunner.kt
-```
-
-Runs on-device using quantized model.
-
-Responsibilities:
-
-* Convert complex task queries into short actionable steps
-* Avoid hallucination
-* Enforce strict output format (3–4 steps)
-* Improve readability
-
----
-
-## 5.5 TTS Engine
-
-Located in:
-
-```
-android/app/src/main/kotlin/com/sakhi/TTSEngine.kt
-```
-
-Converts simplified steps into speech offline.
-
----
-
-## 5.6 ModelManager
-
-Handles copying large model files on background thread to avoid UI blocking.
-
----
-
-# 6. Application Flow (End-to-End)
-
-```
-Press & Hold Record Button
-        ↓
-Native AudioRecord captures PCM16 audio
-        ↓
-Whisper STT (JNI) converts speech → text
-        ↓
-Intent Detector (Dart)
-        ↓
-├─ Assist → LLaMA Simplifier → Pictogram UI → TTS Output
-└─ Report → Incident Report Screen
-```
-
-The entire pipeline runs offline.
-
----
-
-# 7. Screens Overview
-
-## 7.1 Assist Processing Screen
-
-* Receives STT output
-* Runs intent detection
-* Runs LLaMA simplifier
-* Maps steps to pictograms
-
-## 7.2 Assist Result Screen
-
-Displays simplified steps and icons.
-
-## 7.3 Report Processing Screen
-
-Triggered when intent confidence indicates a safety or incident report.
-
----
-
-# 8. Storage & Data Model
-
-### Model Storage
-
-```
-/data/data/com.sakhi/files/models/
-```
-
-### Cached Data Structure
-
-```
-{
-  query: string,
-  response: string,
-  lastUpdated: timestamp
-}
-```
-
-No data leaves the device.
-
----
-
-# 9. Security & Privacy
-
-* Zero cloud usage
-* Zero external API calls
-* Audio only recorded on user action (press & hold)
-* All processing stored locally
-* No user data transmitted
-* Complies with privacy-first architecture principles
-
----
-
-# 10. Scalability
-
-### Works offline at scale because:
-
-* No servers
-* No backend infrastructure
-* No network requirements
-* No cloud inference
-
-### Device Requirements
-
-* 4GB RAM recommended
-* ARM64 preferred
-
----
-
-# 11. Troubleshooting
-
-### Issue: App crashes at startup
-
-Cause: Heavy model copying on main thread
-Fix: Move model copy to background thread (ModelManager)
-
-### Issue: Audio returns 0 bytes
-
-Fix: Use Native AudioRecord instead of Flutter plugin.
-Ensure microphone permissions are granted.
-
-### Issue: Whisper model not loading
-
-Check that `whisper_tiny_q8.bin` exists in:
-
-```
-assets/models/
-```
-
----
-
-# 12. Future Enhancements
-
-1. Multi-language support (Hindi, Kannada, Telugu, Tamil)
-2. Mini-RAG (keyword-based document retrieval)
-3. Advanced reporting workflow
-4. Model compression & optimizations
-5. Optional cloud sync for NGO deployments
-
----
-
-# 13. Build Commands Summary
-
-```
-flutter clean
-flutter pub get
-flutter build apk --release
-adb install app-release.apk
-```
-
----
-
-# 14. Contact
-
-For support or collaboration:
 Team Git It Done
+
+## Contact
+
+This repository is maintained as part of the Sakhi Sahayak hackathon project.

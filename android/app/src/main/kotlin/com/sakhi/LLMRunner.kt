@@ -542,7 +542,6 @@ class LLMRunner(private val context: Context) {
                     mapOf(
                         "id" to 1, 
                         "text" to formattedText.toString(),
-                        "formatted" to formattedText,
                         "source" to cachedResponse.source,
                         "verified" to cachedResponse.verified,
                         "cache_hit" to true
@@ -559,8 +558,20 @@ class LLMRunner(private val context: Context) {
             return mapOf("steps" to listOf(mapOf("id" to 1, "text" to "Model not loaded", "source" to "Error")))
         }
         
-        val prompt = """Question: $input
-Answer:""".trimIndent()
+        val retrievedContext = prefs?.get("retrieved_context")?.toString()?.trim().orEmpty()
+        val prompt = if (retrievedContext.isNotEmpty()) {
+            """You are a grounded village assistant.
+    Use only the provided context. If the context does not answer the question, say you are not sure.
+
+    CONTEXT:
+    $retrievedContext
+
+    QUESTION: $input
+    Answer:""".trimIndent()
+        } else {
+            """Question: $input
+    Answer:""".trimIndent()
+        }
 
         Log.i("LLMRunner", "⚠️ CACHE MISS - Using LLM for: $input")
         val startTime = System.currentTimeMillis()
@@ -578,10 +589,10 @@ Answer:""".trimIndent()
                 mapOf(
                     "id" to 1, 
                     "text" to formattedText.toString(),
-                    "formatted" to formattedText,
                     "source" to "AI Generated",
                     "verified" to false,
                     "cache_hit" to false,
+                    "rag_context_used" to retrievedContext.isNotEmpty(),
                     "inference_time_ms" to duration
                 )
             )

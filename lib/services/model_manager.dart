@@ -25,9 +25,6 @@ class ModelManager {
       if (!await target.exists()) {
         final byteData = await rootBundle.load(source);
         await target.writeAsBytes(byteData.buffer.asUint8List(), flush: true);
-        print("Copied $fileName");
-      } else {
-        print("$fileName already exists");
       }
     }
 

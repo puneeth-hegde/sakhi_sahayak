@@ -1,7 +1,7 @@
-import 'dart:io';
-import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter/foundation.dart';
+import '../services/embedding_debug.dart';
 import '../platform/sakhi_platform.dart';
 import '../services/audio_service.dart';
 import '../services/model_manager.dart';
@@ -26,18 +26,36 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Future<void> _initializeSakhi() async {
-    await Permissions.ensureMicPermission();
+    // CHECK PERMISSIONS FIRST
+    final permissionGranted = await Permissions.ensureMicPermission();
+    if (!permissionGranted) {
+      if (mounted) {
+        setState(() => _statusText = "Microphone permission required. Please enable in settings.");
+      }
+      return; // Do not proceed without microphone
+    }
+
     if (mounted) setState(() => _statusText = "Loading Knowledge...");
 
-    await ModelManager.prepareModels();
-    final platform = Provider.of<SakhiPlatform>(context, listen: false);
-    await platform.initialize();
+    try {
+      await ModelManager.prepareModels();
+      final platform = Provider.of<SakhiPlatform>(context, listen: false);
+      final initSuccess = await platform.initialize();
 
-    if (mounted) {
-      setState(() {
-        _isReady = true;
-        _statusText = "Tap & Hold to Speak";
-      });
+      if (mounted) {
+        if (initSuccess) {
+          setState(() {
+            _isReady = true;
+            _statusText = "Tap & Hold to Speak";
+          });
+        } else {
+          setState(() => _statusText = "Failed to load models. Please restart.");
+        }
+      }
+    } catch (e) {
+      if (mounted) {
+        setState(() => _statusText = "Error: ${e.toString()}");
+      }
     }
   }
 
@@ -45,9 +63,15 @@ class _HomeScreenState extends State<HomeScreen> {
     if (!_isReady) return;
     try {
       await _audio.startRecording();
-      setState(() => _isRecording = true);
+      if (mounted) {
+        setState(() => _isRecording = true);
+      }
     } catch (e) {
-      print(e);
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Recording error: $e')),
+        );
+      }
     }
   }
 
@@ -55,16 +79,21 @@ class _HomeScreenState extends State<HomeScreen> {
     if (!_isRecording) return;
     try {
       final bytes = await _audio.stopRecording();
-      setState(() => _isRecording = false);
-      if (bytes.isNotEmpty) {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (_) => AssistProcessingScreen(audioData: bytes)),
-        );
+      if (mounted) {
+        setState(() => _isRecording = false);
+        if (bytes.isNotEmpty) {
+          await Navigator.of(context).push(
+            MaterialPageRoute(
+                builder: (_) => AssistProcessingScreen(audioData: bytes)),
+          );
+        }
       }
     } catch (e) {
-      print(e);
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Recording error: $e')),
+        );
+      }
     }
   }
 
@@ -123,6 +152,7 @@ class _HomeScreenState extends State<HomeScreen> {
             GestureDetector(
               onLongPressStart: (_) => _startRecording(),
               onLongPressEnd: (_) => _stopRecording(),
+              onLongPressCancel: () => _stopRecording(),
               child: Container(
                 height: 90,
                 width: 90,
@@ -155,6 +185,20 @@ class _HomeScreenState extends State<HomeScreen> {
           ],
         ),
       ),
+      // Debug floating button to run embedding sanity check in debug builds
+      floatingActionButton: kDebugMode
+          ? FloatingActionButton(
+              onPressed: () async {
+                // Run sanity check (prints to device log)
+                await EmbeddingDebug.runSanityCheck();
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(content: Text('Embedding sanity check completed (see logs)')),
+                );
+              },
+              child: Icon(Icons.bug_report),
+              backgroundColor: Colors.orange,
+            )
+          : null,
     );
   }
 }

@@ -1,5 +1,6 @@
 package com.sakhi
 
+import android.util.Log
 import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.plugin.common.MethodChannel
@@ -115,10 +116,17 @@ class MainActivity : FlutterActivity() {
     private fun copyModelFromAssets(name: String): String {
         val outFile = File(filesDir, name)
         if (!outFile.exists() || outFile.length() == 0L) {
-            assets.open(name).use { input ->
-                FileOutputStream(outFile).use { output ->
-                    input.copyTo(output)
+            // Flutter asset path is under assets/ directory in APK
+            val assetPath = "models/$name"
+            try {
+                assets.open(assetPath).use { input ->
+                    FileOutputStream(outFile).use { output ->
+                        input.copyTo(output)
+                    }
                 }
+            } catch (e: Exception) {
+                Log.e("MainActivity", "Failed to copy model from $assetPath", e)
+                throw e
             }
         }
         return outFile.absolutePath

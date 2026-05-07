@@ -27,7 +27,8 @@ android {
 
         // ----- Required for Whisper -----
         ndk {
-            abiFilters += listOf("arm64-v8a", "armeabi-v7a")
+            abiFilters.clear()
+            abiFilters.add("arm64-v8a")
         }
 
         externalNativeBuild {

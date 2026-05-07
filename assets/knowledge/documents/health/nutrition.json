@@ -1,0 +1,47 @@
+{
+  "id": "nutrition_001",
+  "title": "Child Nutrition & Healthy Feeding",
+  "category": "health",
+  "subcategory": "nutrition",
+  "source": "ICMR, National Health Mission, UNICEF India",
+  "updated_date": "2026-05-07",
+  "trust_level": "high",
+  "language": "en",
+  "chunks": [
+    {
+      "chunk_id": "nutrition_001_001",
+      "title": "First 6 Months - Exclusive Breastfeeding",
+      "content": "Breast milk is BEST food for 0-6 month baby - NO water, NO formula needed. Breastfeeding benefits: transfers immunity, prevents infections (diarrhea, pneumonia, ear infections), prevents malnutrition, creates bonding. Mother's first milk (colostrum) is yellow thick liquid - DO NOT discard, it has antibodies. Breastfeed on-demand (8-12 times/day). Signs of good feeding: baby drinks for 10-15 min per breast, makes swallowing sounds, 6+ wet diapers daily, steady weight gain. Mother needs extra 500 calories/day - eat nutritious food.",
+      "keywords": ["breastfeeding", "milk", "6 months", "infant", "immunity"],
+      "reading_time_seconds": 50
+    },
+    {
+      "chunk_id": "nutrition_001_002",
+      "title": "Complementary Feeding - 6-24 Months",
+      "content": "At 6 months, start complementary foods while continuing breastfeeding. Start with iron-rich foods: soft cooked rice with lentils (dal), fortified cereal, egg (yolk first), meat/chicken (ground). Introduce one new food every 3 days - watch for allergies (rash, vomiting, diarrhea). By 8 months: Mash foods (avoid choking hazard like whole nuts, grapes). By 12 months: Family food (without excess salt/spices). Continue breastfeeding until 2 years. By 24 months, child should eat 3 meals + 1-2 snacks matching family diet (soft, no whole nuts).",
+      "keywords": ["complementary", "weaning", "6 months", "foods", "breastfeeding"],
+      "reading_time_seconds": 50
+    },
+    {
+      "chunk_id": "nutrition_001_003",
+      "title": "Prevention of Stunting & Malnutrition",
+      "content": "Stunting (short height for age) affects 1 in 3 Indian children - caused by chronic malnutrition. Prevent by: (1) Exclusive breastfeeding until 6 months, (2) Nutritious weaning foods from 6 months, (3) Home fortification - add 1 iron+vitamin D spoon (Fortified Rice Kernel) to rice, (4) Egg 4-5 times weekly (affordable protein), (5) Local vegetables/greens, (6) Deworming at 12-24 months (given free at health center), (7) Growing height measurement at health check-ups. Nutrition in first 1000 days (conception to 2 years) determines lifetime health.",
+      "keywords": ["stunting", "malnutrition", "fortification", "growth", "protein"],
+      "reading_time_seconds": 50
+    },
+    {
+      "chunk_id": "nutrition_001_004",
+      "title": "Anemia Prevention in Women & Children",
+      "content": "Anemia (low blood) affects 50%+ women/girls in India. Causes: iron deficiency, malnutrition, heavy periods, pregnancy. Symptoms: tiredness, pale skin/nails, breathlessness, dizziness. Prevent: Eat iron-rich foods (leafy greens-spinach, dal, meat, jaggery), take iron tablet if prescribed by health worker. Iron tablet color may turn stool black - this is normal. Pregnant women get iron supplements free - take daily. Children 6-59 months get iron syrup free. Vitamin C helps iron absorption (eat citrus fruit with iron meals).",
+      "keywords": ["anemia", "iron", "deficiency", "blood", "supplement"],
+      "reading_time_seconds": 45
+    },
+    {
+      "chunk_id": "nutrition_001_005",
+      "title": "Maternal Nutrition During Pregnancy & Lactation",
+      "content": "Pregnant women need extra 350 calories/day + protein, iron, calcium, folic acid. Eat: dal (protein+iron), leafy vegetables (iron+folate), egg, milk, local seasonal fruits. Avoid: uncooked meat (listeria risk), raw eggs, unpasteurized milk, excess caffeine. Take iron+calcium supplements given free at health center. Take folic acid tablet (prevents birth defects) - most critical in first 3 months. Lactating mothers need extra 500 calories/day - continue nutritious diet. Water intake is important - drink 8-10 glasses daily. Avoid alcohol, smoking, excess spices during lactation.",
+      "keywords": ["pregnancy", "lactation", "supplements", "diet", "calcium"],
+      "reading_time_seconds": 50
+    }
+  ]
+}

@@ -1,12 +1,9 @@
-# Ignore huge models
-*.bin
-*.gguf
-
 # Whisper.cpp repo clone
 android/app/src/main/cpp/whisper.cpp/
 
 # Build output
 build/
+.dart_tool/
 android/.gradle/
 .android/
 .flutter-plugins-dependencies
@@ -39,6 +36,28 @@ web/
 *.keystore
 google-services.json
 key.properties
+
+# Python local environment and caches
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.python-version
+
+# Local working notes and generated docs
+IMPROVEMENT_PLAN.md
+PHASE0_STATUS.md
+PHASE2_HYBRID_INSTRUCTIONS.md
+WORKLOG_CHECKPOINT.md
+llm_analysis.md
+report.md
+test.py
+main.py
+
+# Release artifacts
+*.apk
 
 # Logs
 *.log

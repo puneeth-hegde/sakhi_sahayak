@@ -17,6 +17,9 @@ dependencies:
   
   # Local Storage (REQUIRED for Reporting)
   shared_preferences: ^2.2.2
+
+  # Secure local storage for incident reports
+  flutter_secure_storage: ^9.2.2
   
   # Permissions (Microphone)
   permission_handler: ^11.3.0
@@ -43,6 +46,7 @@ flutter:
   # ASSETS REGISTRATION
   assets:
     - assets/models/
+    - assets/knowledge/
     - assets/icons/
     - assets/images/logo.jpg
   

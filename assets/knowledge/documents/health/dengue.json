@@ -1,0 +1,47 @@
+{
+  "id": "dengue_001",
+  "title": "Dengue Fever - Identification & Care",
+  "category": "health",
+  "subcategory": "infectious_disease",
+  "source": "WHO Fact Sheets, National Health Mission",
+  "updated_date": "2026-05-07",
+  "trust_level": "high",
+  "language": "en",
+  "chunks": [
+    {
+      "chunk_id": "dengue_001_001",
+      "title": "What is Dengue?",
+      "content": "Dengue is viral infection spread by Aedes mosquito bites (day-biting mosquito, not night mosquito like malaria). Symptoms appear 3-14 days after bite. About 50% of exposures cause no symptoms. Dengue occurs in clusters during monsoon/post-monsoon (July-November). One dengue infection gives lifetime immunity to that strain (4 strains exist) but increases risk of severe dengue on second infection. Around 390 million dengue cases yearly worldwide. Most people recover fully within 1-2 weeks.",
+      "keywords": ["dengue", "fever", "mosquito", "aedes", "viral"],
+      "reading_time_seconds": 45
+    },
+    {
+      "chunk_id": "dengue_001_002",
+      "title": "Dengue Symptoms - Watch for Red Flags",
+      "content": "Early symptoms: Sudden fever 104-105°F (40-40.5°C), severe headache, joint/bone pain (breakbone fever), muscle pain, rash starting on chest/face, vomiting, weakness. Most people recover. WARNING SIGNS (danger zone, 3-7 days after fever starts): Severe vomiting/inability to drink, persistent vomiting (blood), abdominal pain, lethargy/drowsiness, liver enlargement, sudden drop in platelet count. Severe dengue includes dengue hemorrhagic fever (internal bleeding) and dengue shock syndrome - these are MEDICAL EMERGENCIES.",
+      "keywords": ["fever", "symptoms", "rash", "bleeding", "danger"],
+      "reading_time_seconds": 50
+    },
+    {
+      "chunk_id": "dengue_001_003",
+      "title": "Home Care & When to Seek Help",
+      "content": "For regular dengue: Rest, drink plenty of water (prevent dehydration), use paracetamol for fever/pain (NOT aspirin - increases bleeding risk). Monitor temperature 2x daily. Seek help immediately if: fever does not reduce after 5 days, warning signs appear, or unable to drink/keep down fluids. Pregnant women with dengue have high risk to fetus - MUST visit hospital. Children under 5 are at higher risk of severe dengue. Old blood test (serology) confirms dengue 5+ days after fever; NS1 antigen test positive within 5 days.",
+      "keywords": ["care", "home", "rest", "hydration", "hospital"],
+      "reading_time_seconds": 50
+    },
+    {
+      "chunk_id": "dengue_001_004",
+      "title": "Prevention of Dengue",
+      "content": "Prevent dengue: (1) Remove standing water daily - check flower pots, buckets, coconut shells, discarded tires, puddles - even spoon of water with mosquito eggs is enough, (2) Wear long sleeves/pants during day (Aedes bites during 8am-6pm, peak 9-10am and 4-5pm), (3) Use mosquito repellent (DEET-based), (4) Install screens on windows, (5) Use mosquito net during day if someone in home has dengue, (6) Empty and clean water storage containers weekly, (7) Community spray (fogging) during dengue outbreak. NO VACCINE broadly available for general population yet.",
+      "keywords": ["prevention", "water", "mosquito", "repellent", "screening"],
+      "reading_time_seconds": 55
+    },
+    {
+      "chunk_id": "dengue_001_005",
+      "title": "Dengue During Pregnancy & Breastfeeding",
+      "content": "Pregnant women with dengue have risks: premature labor, fetal death, low birth weight, birth defects (controversial). Early dengue in pregnancy has highest risk to fetus. Severe dengue puts mother at risk. Seek hospital care if pregnant with dengue symptoms. Infections near delivery (7 days before to 5 days after) may transmit dengue to newborn - newborn can have severe form. Breastfeeding is safe even if mother had dengue. Consult doctor before any preventive medicine during pregnancy.",
+      "keywords": ["pregnancy", "fetal", "breastfeeding", "risk", "birth"],
+      "reading_time_seconds": 45
+    }
+  ]
+}

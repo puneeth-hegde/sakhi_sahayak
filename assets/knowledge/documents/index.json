@@ -1,0 +1,27 @@
+{
+  "documents": [
+    "government/pm_kisan.json",
+    "government/pmuy.json",
+    "government/mgnrega.json",
+    "government/sukanya_samriddhi.json",
+    "government/mudra_updated.json",
+    "government/nrega.json",
+    "government/ayushman_bharat.json",
+    "health/nhm_overview.json",
+    "health/fever_management.json",
+    "health/diarrhea.json",
+    "health/malaria.json",
+    "health/tuberculosis.json",
+    "health/dengue.json",
+    "health/vaccination.json",
+    "health/nutrition.json",
+    "health/water_sanitation.json",
+    "health/maternal_health.json",
+    "agriculture/crops.json"
+  ],
+  "total_documents": 18,
+  "total_chunks": "90+",
+  "last_updated": "2026-05-07",
+  "version": "2.0-hybrid",
+  "generation_info": "Phase 2: Hybrid KB with keyword + vector embeddings"
+}

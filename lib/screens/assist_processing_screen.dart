@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../platform/sakhi_platform.dart';
+import '../services/knowledge_retriever.dart';
 import '../services/pictogram_mapper.dart';
 import '../services/intent_detector.dart';
 import 'assist_result_screen.dart';
@@ -70,9 +71,25 @@ class _AssistProcessingScreenState extends State<AssistProcessingScreen> {
     // CASE C: ASSIST MODE → NORMAL FLOW
     // -----------------------------------------
     setState(() => status = "Understanding...");
+    final retrievedHits = await KnowledgeRetriever.search(text, topK: 3);
+    final retrievedContext = retrievedHits.isEmpty
+        ? ""
+        : retrievedHits.map((hit) {
+            return "[${hit.document.document.title}] ${hit.chunk.text}";
+          }).join("\n");
+
     final prefs = {
       "preferred_step_count": 3,
       "preferred_sentence_length": "short",
+      "retrieved_context": retrievedContext,
+      "retrieved_sources": retrievedHits
+          .map((hit) => {
+                "title": hit.document.document.title,
+                "source": hit.document.document.source,
+                "category": hit.document.document.category,
+                "score": hit.score,
+              })
+          .toList(),
     };
 
     final result = await platform.simplifyText(text, prefs);
@@ -109,19 +126,19 @@ class _AssistProcessingScreenState extends State<AssistProcessingScreen> {
     return showDialog<bool>(
       context: context,
       builder: (_) => AlertDialog(
-        title: Text("Possible Incident Report"),
-        content: Text(
+        title: const Text("Possible Incident Report"),
+        content: const Text(
           "It sounds like you may be trying to report an incident.\n\n"
           "Do you want to switch to Report Mode?",
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context, false),
-            child: Text("No"),
+            child: const Text("No"),
           ),
           ElevatedButton(
             onPressed: () => Navigator.pop(context, true),
-            child: Text("Yes"),
+            child: const Text("Yes"),
           ),
         ],
       ),
@@ -135,12 +152,12 @@ class _AssistProcessingScreenState extends State<AssistProcessingScreen> {
     showDialog(
       context: context,
       builder: (_) => AlertDialog(
-        title: Text("Error"),
+        title: const Text("Error"),
         content: Text(msg),
         actions: [
           TextButton(
-            onPressed: () => Navigator.popUntil(context, (r) => r.isFirst),
-            child: Text("OK"),
+            onPressed: () => Navigator.pop(context),
+            child: const Text("OK"),
           ),
         ],
       ),

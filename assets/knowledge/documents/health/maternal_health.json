@@ -1,0 +1,47 @@
+{
+  "id": "maternal_health_001",
+  "title": "Maternal Health & Safe Pregnancy",
+  "category": "health",
+  "subcategory": "reproductive",
+  "source": "JSSK (Janani Suraksha Yojana), National Health Mission",
+  "updated_date": "2026-05-07",
+  "trust_level": "high",
+  "language": "en",
+  "chunks": [
+    {
+      "chunk_id": "maternal_health_001_001",
+      "title": "Pregnancy Care - Antenatal Check-ups",
+      "content": "Regular check-ups save mothers' lives. Schedule: Visit health center by 12 weeks of pregnancy, then monthly until 28 weeks, then 2-weekly until 36 weeks, then weekly until delivery. At visits: Blood pressure check, weight tracking, urine test, blood glucose (gestational diabetes screening), ultrasound (dating at 10-14 weeks, anatomy scan at 18-20 weeks, growth scan at 28 weeks). Iron+calcium supplements given free. Tetanus vaccine (TT) 2 doses 4 weeks apart before 9 months protects mother + newborn. Cost ZERO - all services free under government.",
+      "keywords": ["pregnancy", "checkup", "antenatal", "care", "free"],
+      "reading_time_seconds": 50
+    },
+    {
+      "chunk_id": "maternal_health_001_002",
+      "title": "Warning Signs in Pregnancy - Seek Help Urgently",
+      "content": "DANGER SIGNS - Go to hospital immediately: (1) Vaginal bleeding/spotting, (2) Severe pain (abdomen/head/chest), (3) Swelling of face/hands/feet with headache (preeclampsia), (4) Vomiting unable to eat/drink, (5) Fever >38°C, (6) No fetal movement >2 hours (after 20 weeks), (7) Leakage of fluid from vagina (rupture of membrane), (8) Severe dizziness/fainting. Do NOT ignore any of these. Go to nearest hospital/health center immediately. Call ambulance if cannot travel - ambulance is free under PMJAY scheme.",
+      "keywords": ["danger", "bleeding", "fever", "emergency", "hospital"],
+      "reading_time_seconds": 40
+    },
+    {
+      "chunk_id": "maternal_health_001_003",
+      "title": "Delivery Options & Safe Delivery Services",
+      "content": "Delivery options: (1) Home delivery (Traditional Birth Attendant/TBA if hospital far away) - requires trained person + clean environment, (2) Health center delivery (Sub-center for low-risk, PHC for medium-risk), (3) Hospital delivery (recommended for high-risk - age <18/>35, multiple pregnancy, diabetes, previous complications). Under Janani Suraksha Yojana (JSY) - delivery is FREE at government hospital/health center including: (1) Delivery care, (2) Emergency transport (free ambulance), (3) Newborn care, (4) Blood transfusion if needed, (5) Caesarian if required.",
+      "keywords": ["delivery", "hospital", "free", "safe", "birth"],
+      "reading_time_seconds": 50
+    },
+    {
+      "chunk_id": "maternal_health_001_004",
+      "title": "Postpartum Care - First 6 Weeks",
+      "content": "After delivery, mother needs rest + care for 6 weeks (postnatal period). Health center visits: Day 1 (same day), Day 3, Day 7, Week 6. Check-ups for: bleeding (heavy bleeding = medical emergency), wound healing (if stitches), blood pressure, mood (postpartum depression screening). Newborn care: (1) Exclusive breastfeeding until 6 months, (2) Kangaroo care (skin-to-skin contact) for bonding + warmth, (3) Newborn screening blood tests (PKU, thyroid) at 3-5 days, (4) Vaccinations started at birth (BCG, OPV, Hep B). Registered home visits by ANM (Auxiliary Nurse Midwife) provided free.",
+      "keywords": ["postpartum", "postnatal", "care", "newborn", "visit"],
+      "reading_time_seconds": 50
+    },
+    {
+      "chunk_id": "maternal_health_001_005",
+      "title": "Maternal Nutrition & Entitlements",
+      "content": "Pregnant mothers food entitlements: (1) Free nutrition (take-home ration/THR) from health center - 400 calories + minerals 6 months, (2) Maternity Benefit (Pradhan Mantri Maternity Benefit) - ₹500 direct cash during pregnancy + delivery, (3) Free nutrition during lactation (6 months postpartum). Nutrition essentials: Protein (dal,meat,egg), iron (greens,jaggery), calcium (milk), folic acid supplement (prevents birth defects). Avoid: Uncooked meat, excess caffeine, smoking, alcohol, heavy lifting. Rest 40-45 days after delivery before heavy work.",
+      "keywords": ["nutrition", "benefit", "cash", "entitlement", "food"],
+      "reading_time_seconds": 45
+    }
+  ]
+}

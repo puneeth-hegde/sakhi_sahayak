@@ -1,0 +1,29 @@
+{
+  "document": {
+    "id": "diarrhea_001",
+    "title": "Diarrhea and Dehydration Guidance",
+    "category": "health",
+    "source": "https://nhm.gov.in/",
+    "jurisdiction": "national",
+    "last_updated": "2026-05-07",
+    "version": "1.0.0",
+    "trust_level": "verified",
+    "language": "english"
+  },
+  "chunks": [
+    {
+      "id": "diarrhea_001_001",
+      "sequence_order": 1,
+      "text": "Use ORS mixed in clean water for diarrhea and dehydration support. Escalate quickly if there is blood in stool, severe dehydration, or symptoms last more than 3 days.",
+      "keywords": ["ors", "dehydration", "diarrhea", "escalate"],
+      "language": "english"
+    },
+    {
+      "id": "diarrhea_001_002",
+      "sequence_order": 2,
+      "text": "For health advice in the app, keep the response short and include a clear escalation path because this is a safety-sensitive category.",
+      "keywords": ["health", "safety", "escalation", "advice"],
+      "language": "english"
+    }
+  ]
+}

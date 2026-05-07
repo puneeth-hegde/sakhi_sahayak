@@ -1,0 +1,47 @@
+{
+  "id": "tuberculosis_001",
+  "title": "Tuberculosis (TB) - Detection & Cure",
+  "category": "health",
+  "subcategory": "infectious_disease",
+  "source": "WHO, CDC, National TB Elimination Programme India",
+  "updated_date": "2026-05-07",
+  "trust_level": "high",
+  "language": "en",
+  "chunks": [
+    {
+      "chunk_id": "tuberculosis_001_001",
+      "title": "What is TB and How It Spreads",
+      "content": "Tuberculosis (TB) is caused by Mycobacterium tuberculosis bacterium. It spreads through cough/sneeze droplets - NOT through shaking hands, sharing food, or touching. Most people exposed to TB get latent TB (no symptoms, not contagious). Without treatment, 5-15% of latent TB becomes active TB. Active TB affects lungs (pulmonary) or organs (extrapulmonary). India reports 23 lakh TB cases annually. Good news: TB is CURABLE with proper medicine.",
+      "keywords": ["tuberculosis", "TB", "cough", "airborne", "latent"],
+      "reading_time_seconds": 50
+    },
+    {
+      "chunk_id": "tuberculosis_001_002",
+      "title": "Signs of Active TB",
+      "content": "Active TB symptoms: (1) Cough lasting 3+ weeks (may have blood/phlegm), (2) Fever in afternoon/evening, (3) Night sweats soaking clothes, (4) Fatigue and weakness, (5) Chest pain when coughing, (6) Loss of appetite and weight loss. If you have these symptoms, DO NOT delay - visit health center for FREE TB testing. TB testing includes chest X-ray and sputum culture. Diagnosis is NOT expensive - it is free at government health centers. Early diagnosis saves lives.",
+      "keywords": ["cough", "fever", "symptoms", "diagnosis", "testing"],
+      "reading_time_seconds": 45
+    },
+    {
+      "chunk_id": "tuberculosis_001_003",
+      "title": "TB Treatment - Complete the Course",
+      "content": "TB is CURABLE with 6 months of medicine. Standard regimen (HRZE): 2 months of 4 drugs (Isoniazid, Rifampicin, Pyrazinamide, Ethambutol) + 4 months of 2 drugs (H+R). FREE medicines provided at health center or DOTS (Directly Observed Therapy) center. CRITICAL: Complete 100% of medicines even if symptoms vanish after 2 months - incomplete treatment causes drug-resistant TB which is harder to cure. Register at nearest health center. Take medicine same time daily with water.",
+      "keywords": ["treatment", "medicine", "cure", "DOTS", "6 months"],
+      "reading_time_seconds": 50
+    },
+    {
+      "chunk_id": "tuberculosis_001_004",
+      "title": "TB Prevention & Contacts",
+      "content": "Prevent TB: (1) BCG vaccine given to all infants at birth (protects against severe TB in children), (2) If household contact of TB patient, ask health worker about preventive medicine (IPT - Isoniazid Preventive Therapy) for 6-9 months, (3) Good ventilation - open windows, avoid crowded rooms, (4) Separate spittoon for TB patient, (5) Avoid sharing pillows/blankets. Babies, children, elderly, and people with weak immunity (HIV/malnutrition) are highest risk. TB in HIV patients needs special treatment - 6 months minimum.",
+      "keywords": ["prevention", "BCG", "vaccine", "contact", "ventilation"],
+      "reading_time_seconds": 55
+    },
+    {
+      "chunk_id": "tuberculosis_001_005",
+      "title": "Drug-Resistant TB - When Standard Fails",
+      "content": "If TB patient does not improve after 2 months of standard treatment, or disease returns after cure, suspect drug-resistant TB (DR-TB). DR-TB requires 18-24 months of 5+ medicines - much longer and more difficult. This is WHY completing full course is critical. Multi-drug resistant TB (MDR-TB) and extremely drug-resistant TB (XDR-TB) exist. As of 2025, WHO recommends shorter 6-9 month DR-TB regimens with new drugs - ask health worker about latest options. Cure rates are lower for resistant TB.",
+      "keywords": ["drug-resistant", "MDR-TB", "XDR-TB", "treatment", "relapse"],
+      "reading_time_seconds": 50
+    }
+  ]
+}

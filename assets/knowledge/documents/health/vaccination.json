@@ -1,0 +1,47 @@
+{
+  "id": "vaccination_001",
+  "title": "Vaccination Schedule & Immunization in India",
+  "category": "health",
+  "subcategory": "preventive",
+  "source": "Indian Academy of Pediatrics, Ministry of Health India",
+  "updated_date": "2026-05-07",
+  "trust_level": "high",
+  "language": "en",
+  "chunks": [
+    {
+      "chunk_id": "vaccination_001_001",
+      "title": "India Universal Immunization Program (UIP) Schedule",
+      "content": "All vaccines under UIP are FREE at government health centers. At birth: BCG (TB), OPV-0 (polio), Hep B-0 (hepatitis B). At 6 weeks: Pentavalent-1, OPV-1, IPV-1, Rotavirus-1, Pneumococcal-1. At 10 weeks: Pentavalent-2, OPV-2, IPV-2, Rotavirus-2, Pneumococcal-2. At 14 weeks: Pentavalent-3, OPV-3, IPV-3, Rotavirus-3, Pneumococcal-3. At 6 months: Inactivated Polio Vaccine. At 9-12 months: Measles-Rubella (MR), Japanese Encephalitis (JE in endemic areas). At 12-24 months: Booster doses. Additional vaccines for girls: HPV vaccine (cervical cancer prevention) ages 9-14.",
+      "keywords": ["vaccination", "vaccine", "immunization", "schedule", "free"],
+      "reading_time_seconds": 55
+    },
+    {
+      "chunk_id": "vaccination_001_002",
+      "title": "Importance of Vaccinations",
+      "content": "Vaccines prevent deadly diseases: measles (brain damage, death), diphtheria (suffocation), tuberculosis (organ damage), whooping cough, polio (paralysis), rotavirus (severe diarrhea in infants), pneumonia (lung infection). Vaccines work by teaching immune system to fight disease without causing sickness. Vaccination prevents 3-4 million deaths yearly. Your child must be vaccinated on-time even if previous vaccine was late - continue with next due vaccine. Vaccines are safe - any local pain/fever is normal, serious side effects are rare (1 in 1,000,000).",
+      "keywords": ["immunization", "protection", "disease", "prevention", "safety"],
+      "reading_time_seconds": 50
+    },
+    {
+      "chunk_id": "vaccination_001_003",
+      "title": "Where to Get Vaccines - Free",
+      "content": "FREE vaccines available at: (1) Primary Health Center (PHC) - closest to village, (2) Sub-center - even smaller, (3) Government hospital, (4) Accredited private doctors (may charge administration fee). Vaccines are given on fixed days - ask health worker for schedule. Bring vaccination card every visit. If child has severe fever (>38°C) or severe allergic reaction previously, inform health worker before vaccine. Do NOT delay vaccination - preventable diseases still kill children in villages due to missed immunity window.",
+      "keywords": ["health center", "free", "vaccine schedule", "card"],
+      "reading_time_seconds": 45
+    },
+    {
+      "chunk_id": "vaccination_001_004",
+      "title": "Special Vaccination Programs - Girls & Adults",
+      "content": "Girls aged 9-14: HPV vaccine (3 doses, 6 months apart) prevents cervical cancer - given FREE via school/health center. Pregnant women: Tetanus toxoid (TT) vaccine (2 doses in first pregnancy) prevents neonatal tetanus - vaccine is free. Women post-delivery should get other routine vaccines (MMR, etc.) before next pregnancy. Adults working in health/agriculture: Hepatitis B, typhoid, tetanus boosters recommended. Senior citizens (>60): Pneumonia vaccine, flu vaccine - check with health worker.",
+      "keywords": ["HPV", "girls", "pregnant", "tetanus", "adult"],
+      "reading_time_seconds": 45
+    },
+    {
+      "chunk_id": "vaccination_001_005",
+      "title": "Vaccine Myths Debunked",
+      "content": "MYTH 1: Vaccines cause autism - FALSE, proven by massive studies. MYTH 2: Vaccines weaken immunity - FALSE, they strengthen it. MYTH 3: Natural infection is better than vaccine - FALSE, vaccines give same immunity without disease risk. MYTH 4: Too many vaccines at once overwhelm body - FALSE, children can handle 10x more antigens. MYTH 5: Vaccines contain harmful substances - FALSE, ingredients are in tiny proven-safe quantities. Talk to health worker if you have concerns - they have credible information.",
+      "keywords": ["myth", "safe", "side-effects", "misinformation", "credible"],
+      "reading_time_seconds": 40
+    }
+  ]
+}

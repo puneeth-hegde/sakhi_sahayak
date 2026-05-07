@@ -1,0 +1,47 @@
+{
+  "id": "nrega_001",
+  "title": "MGNREGA - Job Guarantee for Unskilled Work",
+  "category": "government",
+  "subcategory": "employment",
+  "source": "Ministry of Rural Development, NREGA Official Portal",
+  "updated_date": "2026-05-07",
+  "trust_level": "high",
+  "language": "en",
+  "chunks": [
+    {
+      "chunk_id": "nrega_001_001",
+      "title": "What is MGNREGA?",
+      "content": "Mahatma Gandhi National Rural Employment Guarantee Act (MGNREGA) guarantees 100 days paid work yearly to rural households. Launched 2006, benefited 150+ million people. Provides: Daily wage (₹220-330 depending on state as of 2026), guaranteed work, skill development. Work includes: Road construction, water harvesting, soil conservation, embankment building, afforestation. Works in rural areas only. Universal entitlement - all landless/small farmers eligible.",
+      "keywords": ["MGNREGA", "employment", "wage", "rural", "guarantee"],
+      "reading_time_seconds": 45
+    },
+    {
+      "chunk_id": "nrega_001_002",
+      "title": "Eligibility & Registration",
+      "content": "Eligibility: Rural resident, age 18+, willing to do unskilled labor, Indian citizen. Apply at: Gram Panchayat (village council) office OR online portal nrega.nic.in. Required: Name, address, Aadhaar/bank account details. Registration is FREE. Get job card (physical) showing all work history. Once registered, demand work anytime by giving written/verbal application - have up to 15 days to provide work else payment.",
+      "keywords": ["registration", "job card", "Gram Panchayat", "eligibility"],
+      "reading_time_seconds": 40
+    },
+    {
+      "chunk_id": "nrega_001_003",
+      "title": "Work & Wage Payment",
+      "content": "Work provided: Construction, maintenance of public assets (roads, canals, ponds). Work hours: 8 hours daily (or 6 hours if age >60 or woman with child <6 years). Daily wage: ₹220-330 (varies by state, adjusted yearly for inflation). Wage paid within15 days of work completion. Payment method: Direct Bank Transfer (DBT) to worker's account OR check. Minimum 100 days work per household per year guaranteed - if less work provided, get unemployment allowance.",
+      "keywords": ["work", "wage", "payment", "hours", "daily"],
+      "reading_time_seconds": 40
+    },
+    {
+      "chunk_id": "nrega_001_004",
+      "title": "Safety & Entitlements",
+      "content": "Workplace safety: (1) Free safety equipment provided (helmet, gloves, apron), (2) Medical facility at work site, (3) Rest shade with water + first aid. Entitlements: (1) Safety gear free, (2) Skill training during work, (3) Social security benefits (accident insurance) - if worker injured on job, government covers hospital costs + gives compensation, (4) Child care support if woman working. Complaint/grievance: Contact Gram Panchayat OR call NREGA helpline.",
+      "keywords": ["safety", "insurance", "accident", "healthcare", "equipment"],
+      "reading_time_seconds": 45
+    },
+    {
+      "chunk_id": "nrega_001_005",
+      "title": "Check Status and Get Help",
+      "content": "Check work history/wage status: (1) In-person at Gram Panchayat, (2) Online: nrega.nic.in - enter job card number + state, (3) Phone: AAYOG helpline (varies by state). If wage delayed: File complaint at Gram Panchayat OR online portal - get 0.05% compensation per day for delay. If work refused: Escalate to Block Development Officer (BDO). If accident on job: Report immediately, get medical aid + file claim. Minimum 100 days guaranteed - if not provided, eligible for unemployment allowance (₹200/day for shortfall days).",
+      "keywords": ["status", "complaint", "wage", "delay", "help"],
+      "reading_time_seconds": 45
+    }
+  ]
+}

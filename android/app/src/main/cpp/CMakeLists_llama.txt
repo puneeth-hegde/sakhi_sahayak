@@ -3,6 +3,11 @@ cmake_minimum_required(VERSION 3.10)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
+# Suppress 64-bit pointer to 32-bit int casting errors from Flutter's C++ STL on ARM64
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wno-shorten-64-to-32 -Wno-error=shorten-64-to-32")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-shorten-64-to-32 -Wno-error=shorten-64-to-32")
+add_compile_options(-fexceptions -funwind-tables -fno-omit-frame-pointer)
+
 # ================================
 # Llama.cpp core library
 # ================================

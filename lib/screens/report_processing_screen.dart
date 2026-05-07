@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:geolocator/geolocator.dart';
-import 'dart:convert';
+import '../services/report_storage_service.dart';
 
 class ReportProcessingScreen extends StatefulWidget {
   final String text;
@@ -48,8 +47,6 @@ class _ReportProcessingScreenState extends State<ReportProcessingScreen> {
       setState(() => _locationInfo = locString);
     }
 
-    final prefs = await SharedPreferences.getInstance();
-
     final report = {
       "timestamp": DateTime.now().toIso8601String(),
       "content": widget.text,
@@ -57,9 +54,7 @@ class _ReportProcessingScreenState extends State<ReportProcessingScreen> {
       "status": "pending_upload"
     };
 
-    List<String> reports = prefs.getStringList('offline_reports') ?? [];
-    reports.add(jsonEncode(report));
-    await prefs.setStringList('offline_reports', reports);
+    await ReportStorageService.saveReport(report);
 
     if (mounted) {
       setState(() => _saved = true);
@@ -88,7 +83,7 @@ class _ReportProcessingScreenState extends State<ReportProcessingScreen> {
             ),
             SizedBox(height: 16),
             Text(
-              "Your report & location have been encrypted and saved locally. Upload pending internet connection.",
+              "Your report and location have been saved securely on this device. They can be reviewed later when needed.",
               textAlign: TextAlign.center,
               style: TextStyle(fontSize: 16, color: Colors.grey[800]),
             ),

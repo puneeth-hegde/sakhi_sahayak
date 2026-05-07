@@ -1,0 +1,36 @@
+{
+  "document": {
+    "id": "pm_kisan_001",
+    "title": "PM-KISAN Samman Nidhi",
+    "category": "government",
+    "source": "https://pmkisan.gov.in",
+    "jurisdiction": "national",
+    "last_updated": "2026-05-07",
+    "version": "1.0.0",
+    "trust_level": "verified",
+    "language": "english"
+  },
+  "chunks": [
+    {
+      "id": "pm_kisan_001_001",
+      "sequence_order": 1,
+      "text": "PM-KISAN is a Central Sector scheme providing 6000 rupees per year to eligible land-holding farmer families in three equal installments of 2000 rupees each.",
+      "keywords": ["pm-kisan", "farmer", "income support", "6000", "central sector"],
+      "language": "english"
+    },
+    {
+      "id": "pm_kisan_001_002",
+      "sequence_order": 2,
+      "text": "The official PM-KISAN site shows the 22nd installment was released on 13 March 2026 and that eKYC is mandatory for registered farmers.",
+      "keywords": ["22nd installment", "ekyc", "2026", "verified"],
+      "language": "english"
+    },
+    {
+      "id": "pm_kisan_001_003",
+      "sequence_order": 3,
+      "text": "Farmers can check KYS or beneficiary status on the PM-KISAN portal. The site highlights exclusion cases such as some land owners after 01-02-2019 and multiple family members receiving the benefit.",
+      "keywords": ["kys", "beneficiary status", "exclusion", "eligibility"],
+      "language": "english"
+    }
+  ]
+}

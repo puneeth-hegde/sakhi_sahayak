@@ -22,22 +22,28 @@ class STTEngine(private val ctx: Context) {
     external fun nativeTranscribe(buf: FloatArray?, length: Int): String?
     external fun nativeUnloadModel()
 
-    // 🔥 FIXED MODEL LOADING
-    fun loadWhisperModel(assetName: String = "whisper_tiny_q8.bin") {
+    // 🔥 FIXED MODEL LOADING - Asset path corrected for Flutter APK structure
+    fun loadWhisperModel(assetName: String = "models/whisper_tiny_q8.bin") {
         scope.launch(Dispatchers.IO) {
             try {
                 val outDir = File(ctx.filesDir, "models")
                 if (!outDir.exists()) outDir.mkdirs()
 
-                val outFile = File(outDir, assetName)
+                val fileName = assetName.split('/').last()
+                val outFile = File(outDir, fileName)
 
                 // Copy from assets if missing
                 if (!outFile.exists() || outFile.length() == 0L) {
                     Log.i(TAG, "Copying Whisper model to: ${outFile.absolutePath}")
-                    ctx.assets.open(assetName).use { input ->
-                        FileOutputStream(outFile).use { output ->
-                            input.copyTo(output)
+                    try {
+                        ctx.assets.open(assetName).use { input ->
+                            FileOutputStream(outFile).use { output ->
+                                input.copyTo(output)
+                            }
                         }
+                    } catch (e: Exception) {
+                        Log.e(TAG, "Asset not found at $assetName, checking alternate path", e)
+                        throw e
                     }
                 } else {
                     Log.i(TAG, "Whisper model exists: size=${outFile.length()}")

@@ -32,9 +32,11 @@ class _AssistResultScreenState extends State<AssistResultScreen> {
       fullText += "${card.text}. ";
     }
     platform.speakText(fullText, 1.0);
-    setState(() {
-      _hasSpoken = true;
-    });
+    if (mounted) {
+      setState(() {
+        _hasSpoken = true;
+      });
+    }
   }
 
   @override
@@ -46,85 +48,100 @@ class _AssistResultScreenState extends State<AssistResultScreen> {
         automaticallyImplyLeading: false,
       ),
       backgroundColor: Colors.grey[100],
-      body: Column(
-        children: [
-          Expanded(
-            child: ListView.builder(
-              itemCount: widget.cards.length,
-              padding: EdgeInsets.all(16),
-              itemBuilder: (_, i) {
-                final card = widget.cards[i];
-                return Padding(
-                  padding: const EdgeInsets.only(bottom: 16.0),
-                  // CHAT BUBBLE UI
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      // Bot Icon
-                      CircleAvatar(
-                        backgroundColor: Colors.purple[100],
-                        child:
-                            Image.asset(card.iconPath, width: 24, height: 24),
-                      ),
-                      SizedBox(width: 10),
-                      // Message Bubble
-                      Expanded(
-                        child: Container(
-                          padding: EdgeInsets.all(16),
-                          decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.only(
-                                  topRight: Radius.circular(20),
-                                  bottomLeft: Radius.circular(20),
-                                  bottomRight: Radius.circular(20)),
-                              boxShadow: [
-                                BoxShadow(
-                                    color: Colors.black12,
-                                    blurRadius: 4,
-                                    offset: Offset(0, 2))
-                              ]),
-                          child: Text(
-                            card.text,
-                            style: TextStyle(
-                                fontSize: 16,
-                                height: 1.4,
-                                color: Colors.black87),
-                          ),
+      body: widget.cards.isEmpty
+          ? Center(
+              child: Padding(
+                padding: const EdgeInsets.all(24.0),
+                child: Text(
+                  'No advice could be generated for this request.',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontSize: 18, color: Colors.black87),
+                ),
+              ),
+            )
+          : Column(
+              children: [
+                Expanded(
+                  child: ListView.builder(
+                    itemCount: widget.cards.length,
+                    padding: EdgeInsets.all(16),
+                    itemBuilder: (_, i) {
+                      final card = widget.cards[i];
+                      return Padding(
+                        padding: const EdgeInsets.only(bottom: 16.0),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            CircleAvatar(
+                              backgroundColor: Colors.purple[100],
+                              child: Image.asset(
+                                card.iconPath,
+                                width: 24,
+                                height: 24,
+                              ),
+                            ),
+                            SizedBox(width: 10),
+                            Expanded(
+                              child: Container(
+                                padding: EdgeInsets.all(16),
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.only(
+                                    topRight: Radius.circular(20),
+                                    bottomLeft: Radius.circular(20),
+                                    bottomRight: Radius.circular(20),
+                                  ),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.black12,
+                                      blurRadius: 4,
+                                      offset: Offset(0, 2),
+                                    )
+                                  ],
+                                ),
+                                child: Text(
+                                  card.text,
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    height: 1.4,
+                                    color: Colors.black87,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
+                      );
+                    },
+                  ),
+                ),
+                Container(
+                  padding: EdgeInsets.all(20),
+                  color: Colors.white,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      FloatingActionButton(
+                        heroTag: "replay",
+                        backgroundColor: Colors.orange,
+                        onPressed: () => _speakResponse(),
+                        child: Icon(Icons.replay),
+                      ),
+                      FloatingActionButton.extended(
+                        heroTag: "home",
+                        backgroundColor: Colors.purple,
+                        onPressed: () => Navigator.popUntil(
+                          context,
+                          (route) => route.isFirst,
+                        ),
+                        label: Text("Done"),
+                        icon: Icon(Icons.check),
                       ),
                     ],
                   ),
-                );
-              },
-            ),
-          ),
-
-          // Controls
-          Container(
-            padding: EdgeInsets.all(20),
-            color: Colors.white,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                FloatingActionButton(
-                  heroTag: "replay",
-                  backgroundColor: Colors.orange,
-                  onPressed: () => _speakResponse(),
-                  child: Icon(Icons.replay),
-                ),
-                FloatingActionButton.extended(
-                  heroTag: "home",
-                  backgroundColor: Colors.purple,
-                  onPressed: () =>
-                      Navigator.popUntil(context, (route) => route.isFirst),
-                  label: Text("Done"),
-                  icon: Icon(Icons.check),
-                ),
+                )
               ],
             ),
-          )
-        ],
-      ),
     );
   }
 }

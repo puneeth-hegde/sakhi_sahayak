@@ -1,0 +1,29 @@
+{
+  "document": {
+    "id": "mgnrega_001",
+    "title": "MGNREGA",
+    "category": "government",
+    "source": "https://nrega.dord.gov.in/",
+    "jurisdiction": "national",
+    "last_updated": "2026-05-07",
+    "version": "1.0.0",
+    "trust_level": "verified",
+    "language": "english"
+  },
+  "chunks": [
+    {
+      "id": "mgnrega_001_001",
+      "sequence_order": 1,
+      "text": "The official NREGA site now redirects to nrega.dord.gov.in, which should be treated as the current portal entry point for the scheme.",
+      "keywords": ["nrega", "redirect", "portal", "official"],
+      "language": "english"
+    },
+    {
+      "id": "mgnrega_001_002",
+      "sequence_order": 2,
+      "text": "MGNREGA is the rural employment guarantee scheme. In the app knowledge base, use this entry for job card guidance, Gram Panchayat application steps, and state-specific wage follow-up.",
+      "keywords": ["mgnrega", "job card", "gram panchayat", "employment"],
+      "language": "english"
+    }
+  ]
+}

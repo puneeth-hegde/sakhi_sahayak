@@ -1,0 +1,29 @@
+{
+  "document": {
+    "id": "fever_001",
+    "title": "Fever Management",
+    "category": "health",
+    "source": "https://nhm.gov.in/",
+    "jurisdiction": "national",
+    "last_updated": "2026-05-07",
+    "version": "1.0.0",
+    "trust_level": "verified",
+    "language": "english"
+  },
+  "chunks": [
+    {
+      "id": "fever_001_001",
+      "sequence_order": 1,
+      "text": "For a simple fever, rest, drink fluids, and use paracetamol only as appropriate. Escalate if fever lasts more than 3 days, or if there is severe headache, vomiting, rash, or unconsciousness.",
+      "keywords": ["fever", "paracetamol", "escalate", "emergency"],
+      "language": "english"
+    },
+    {
+      "id": "fever_001_002",
+      "sequence_order": 2,
+      "text": "The National Health Mission site was updated on 06 May 2026 and continues to publish new guidance and operational updates, so health content in the app should be refreshed from current official sources.",
+      "keywords": ["nhm", "updated", "2026", "official"],
+      "language": "english"
+    }
+  ]
+}

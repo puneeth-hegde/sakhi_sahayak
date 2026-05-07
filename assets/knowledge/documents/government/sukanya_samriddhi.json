@@ -1,0 +1,29 @@
+{
+  "document": {
+    "id": "sukanya_001",
+    "title": "Sukanya Samriddhi Account Scheme",
+    "category": "government",
+    "source": "https://www.nsiindia.gov.in/InternalPage.aspx?Id_Pk=89",
+    "jurisdiction": "national",
+    "last_updated": "2026-05-07",
+    "version": "1.0.0",
+    "trust_level": "verified",
+    "language": "english"
+  },
+  "chunks": [
+    {
+      "id": "sukanya_001_001",
+      "sequence_order": 1,
+      "text": "The National Savings Institute page states the Sukanya Samriddhi Account Scheme allows a minimum deposit of 250 rupees and a maximum deposit of 1.5 lakh rupees in a financial year.",
+      "keywords": ["sukanya", "deposit", "1.5 lakh", "savings"],
+      "language": "english"
+    },
+    {
+      "id": "sukanya_001_002",
+      "sequence_order": 2,
+      "text": "The account can be opened for a girl child until she turns 10 years old, is available in post offices and authorised banks, matures after 21 years, and qualifies for Section 80C tax benefits.",
+      "keywords": ["girl child", "bank", "post office", "80c", "maturity"],
+      "language": "english"
+    }
+  ]
+}

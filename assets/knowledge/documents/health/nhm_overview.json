@@ -1,0 +1,29 @@
+{
+  "document": {
+    "id": "nhm_001",
+    "title": "National Health Mission Overview",
+    "category": "health",
+    "source": "https://nhm.gov.in/",
+    "jurisdiction": "national",
+    "last_updated": "2026-05-07",
+    "version": "1.0.0",
+    "trust_level": "verified",
+    "language": "english"
+  },
+  "chunks": [
+    {
+      "id": "nhm_001_001",
+      "sequence_order": 1,
+      "text": "The National Health Mission page shows the site was updated on 06 May 2026 and publishes current operational material, reviews, and program guidance.",
+      "keywords": ["nhm", "updated", "2026", "official"],
+      "language": "english"
+    },
+    {
+      "id": "nhm_001_002",
+      "sequence_order": 2,
+      "text": "NHM supports universal access to equitable, affordable, and quality health care. The page highlights JSSK as a program for free services to pregnant women and sick neonates in public health institutions.",
+      "keywords": ["jssk", "pregnancy", "neonate", "free services"],
+      "language": "english"
+    }
+  ]
+}

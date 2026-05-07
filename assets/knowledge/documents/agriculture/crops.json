@@ -1,0 +1,47 @@
+{
+  "id": "agriculture_001",
+  "title": "Crop Calendar & Seasonal Farming Guide",
+  "category": "agriculture",
+  "subcategory": "crops",
+  "source": "Indian Council of Agricultural Research (ICAR), State Agriculture Departments",
+  "updated_date": "2026-05-07",
+  "trust_level": "high",
+  "language": "en",
+  "chunks": [
+    {
+      "chunk_id": "agriculture_001_001",
+      "title": "Kharif Season (Monsoon) - June to October",
+      "content": "Kharif crops (monsoon crops) benefit from monsoon rain June-October. Main crops: Rice (needs water-logged field), cotton (needs 6-8 months), sugarcane (water-intensive), groundnut, soybean, millets (jowar, bajra, ragi). Soil prep: Land plough 4-5 weeks before monsoon onset, field leveling, drainage. Sowing: Start 2nd week of June. Water management: Maintain 5-10cm water level in rice, adequate drainage. Pest control: Common pests - stem borer in rice, pink bollworm in cotton - use IPM (Integrated Pest Management). Harvest: September-November.",
+      "keywords": ["kharif", "monsoon", "rice", "cotton", "crop"],
+      "reading_time_seconds": 50
+    },
+    {
+      "chunk_id": "agriculture_001_002",
+      "title": "Rabi Season (Winter) - October to March",
+      "content": "Rabi crops (winter crops) sown after monsoon. Main crops: Wheat (needs 15-20°C), chickpea (gram), mustard (oil seed), barley, vegetables (cabbage, tomato, onion). Sowing: October-November after monsoon. Water: 2-4 irrigation cycles needed. Soil: Well-draining loamy soil. Temperature: Optimal 15-25°C for growth. Harvest: March-April (wheat ready when golden color, grains hard). Storage: Dry thoroughly before storage - moisture causes rot. Market prices higher in winter - wait for peak prices to sell.",
+      "keywords": ["rabi", "winter", "wheat", "chickpea", "irrigation"],
+      "reading_time_seconds": 50
+    },
+    {
+      "chunk_id": "agriculture_001_003",
+      "title": "Soil Health & Crop Productivity",
+      "content": "Healthy soil = healthy crops. Soil testing (free at state agriculture labs): Test NPK (nitrogen, phosphorus, potassium) + organic matter + pH. Add organic matter: Compost (decomposed farmyard manure), farm waste, green manuring (grow legumes, plough in, adds nitrogen). Crop rotation: Don't plant same crop repeatedly - rotate with different type (legume after cereal). Avoid monoculture (single crop) - depletes specific nutrients. Water conservation: Mulching (straw cover), drip irrigation saves 40% water vs flood irrigation. Avoid excessive chemicals - organic farming is sustainable.",
+      "keywords": ["soil", "health", "NPK", "compost", "rotation"],
+      "reading_time_seconds": 50
+    },
+    {
+      "chunk_id": "agriculture_001_004",
+      "title": "Pest Management & Organic Methods",
+      "content": "IPM (Integrated Pest Management): (1) Prevention - healthy soil + crop rotation reduce pests, (2) Monitoring - scout fields weekly for pest signs, (3) Mechanical control - hand-pick/trap pests, (4) Biological - use natural predators/parasites, (5) Chemical only as last resort (only approved pesticides, follow dose). Organic pest control: Neem oil spray (prevents insects), pheromone traps (lure pests), companion planting (marigold deters pests). Pesticide safety: Spray early morning/late evening, use protective gear, never apply before harvest window, don't spray during bloom (harms pollinators).",
+      "keywords": ["pest", "IPM", "neem", "pesticide", "organic"],
+      "reading_time_seconds": 50
+    },
+    {
+      "chunk_id": "agriculture_001_005",
+      "title": "Support Services & Scheme Information",
+      "content": "Government support: (1) Crop Insurance Scheme - register before sowing, premium paid partly by government, covers yield loss due to weather/pest, (2) Agricultural loans available via bank/MUDRA up to ₹10 lakh, (3) Minimum Support Price (MSP) - government buys crops at declared price (check msprice.gov.in for current rates), (4) Storage facilities - rent cold storage for vegetables/spices to sell later at higher prices. Visit Krishi Vigyan Kendra (KVK) (agricultural science center) for training + demonstrations. Expert advice available by phone DIAL131 (in some states).",
+      "keywords": ["insurance", "loan", "MSP", "storage", "support"],
+      "reading_time_seconds": 45
+    }
+  ]
+}

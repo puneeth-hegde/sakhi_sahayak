@@ -1,0 +1,47 @@
+{
+  "id": "mudra_loan_001",
+  "title": "Pradhan Mantri MUDRA Yojana (PMMY) - Micro Business Loans",
+  "category": "government",
+  "subcategory": "finance",
+  "source": "Ministry of Finance, MUDRA Official Website, Updated 2026",
+  "updated_date": "2026-05-07",
+  "trust_level": "high",
+  "language": "en",
+  "chunks": [
+    {
+      "chunk_id": "mudra_loan_001_001",
+      "title": "What is MUDRA Loan & Schemes",
+      "content": "MUDRA (Micro Units Development & Refinance Agency) launched April 2015 provides loans up to ₹10 lakh (₹20 lakh for experienced borrowers) for non-corporate, non-farm small/micro businesses. Four schemes by growth stage: (1) SHISHU: ₹0-₹50,000 startup stage, (2) KISHOR: ₹50,000-₹5 lakh growth stage, (3) TARUN: ₹5-₹10 lakh maturity stage, (4) TARUNPLUS: ₹10-₹20 lakh for those who repaid TARUN successfully. Loans are disbursed by banks, RRBs, micro-finance institutions (MFIs), NBFCs. Beneficiaries: Small shopkeepers, artisans, service providers, manufacturing units.",
+      "keywords": ["MUDRA", "loan", "small business", "entrepreneur", "finance"],
+      "reading_time_seconds": 50
+    },
+    {
+      "chunk_id": "mudra_loan_001_002",
+      "title": "Eligibility & Application Process",
+      "content": "Eligibility: Age 18+, Indian citizen, business idea already developed OR business already running, NOT a large corporate. Required documents: Photo ID/Aadhaar, PAN (if available), address proof, business plan description (1 page hand-written OK), collateral NOT required for most loans <₹10 lakh. Apply at: (1) Nearest bank branch, (2) RRB branch, (3) MFI, (4) NBFC, (5) Online portal www.udyamimitra.in. Processing takes 5-10 days. No agent/middleman - apply directly.",
+      "keywords": ["eligibility", "application", "documents", "Aadhaar", "bank"],
+      "reading_time_seconds": 45
+    },
+    {
+      "chunk_id": "mudra_loan_001_003",
+      "title": "Loan Terms & Interest",
+      "content": "Interest rates vary by lender (bank charges 11-14%, MFI charges 18-24% depending on risk). Processing fee 0.5-2%. Loan tenor (duration) 1-5 years depending on business type. Moratorium (no payment) period 0-6 months allowed. No personal guarantee needed for SHISHU scheme. For group lending (10+ people together), credit guarantee available: 85% loan guarantee if default. Credit rating improves after timely repayment - next loan easier. Insurance coverage: borrower life insurance free for loans <₹10 lakh (if death, loan waived).",
+      "keywords": ["interest", "rate", "repayment", "insurance", "guarantee"],
+      "reading_time_seconds": 45
+    },
+    {
+      "chunk_id": "mudra_loan_001_004",
+      "title": "Business Types Supported",
+      "content": "MUDRA supports: (1) Manufacturing - small units (machinery loans), (2) Services - shops, salons, repair services, (3) Agri-allied - dairy, poultry, fish farming, beekeeping, (4) Retail - small traders, hawkers, (5) Handlooms - textile, weaving products, (6) Transport - auto-rickshaw drivers, goods carriage owner-operators, (7) Education - coaching centers, skill training. NOT supported: large-scale industries, professional services (engineers/doctors), agricultural activities (farming) not allied, real estate, trading securities. As of 2026, 48+ million MUDRA loans sanctioned worth ₹2.5+ lakh crore.",
+      "keywords": ["business", "types", "manufacturing", "service", "loan"],
+      "reading_time_seconds": 50
+    },
+    {
+      "chunk_id": "mudra_loan_001_005",
+      "title": "Repayment & Support",
+      "content": "Repay loan on schedule - timely payment builds credit score for future loans. Default has consequences: credit blackout, legal action, asset seizure. Support available: (1) If difficulty repaying, contact lender immediately - restructuring may be possible, (2) Skill training available FREE from various schemes to improve business, (3) Market linkage support for products, (4) Business advisory at district MSME centers. MUDRA has success rate >95% repayment. Borrower phone lines: 1800-180-1111 (toll-free) for grievances/info.",
+      "keywords": ["repayment", "credit", "default", "support", "training"],
+      "reading_time_seconds": 45
+    }
+  ]
+}

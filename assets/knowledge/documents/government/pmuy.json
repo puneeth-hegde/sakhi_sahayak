@@ -1,0 +1,29 @@
+{
+  "document": {
+    "id": "pmuy_001",
+    "title": "Pradhan Mantri Ujjwala Yojana 2.0",
+    "category": "government",
+    "source": "https://www.pmuy.gov.in/",
+    "jurisdiction": "national",
+    "last_updated": "2026-05-07",
+    "version": "1.0.0",
+    "trust_level": "verified",
+    "language": "english"
+  },
+  "chunks": [
+    {
+      "id": "pmuy_001_001",
+      "sequence_order": 1,
+      "text": "PMUY is a Government of India LPG connection scheme. The official site shows total connections released as of 04 May 2026 and highlights the latest PMUY extension.",
+      "keywords": ["pmuy", "lpg", "connections", "2026"],
+      "language": "english"
+    },
+    {
+      "id": "pmuy_001_002",
+      "sequence_order": 2,
+      "text": "To apply, locate your nearest LPG distributor and use the official PMUY application or KYC form. The site lists an LPG emergency helpline of 1906 and an Ujjwala helpline of 1800-266-6696.",
+      "keywords": ["apply", "distributor", "kyc", "helpline", "1906"],
+      "language": "english"
+    }
+  ]
+}

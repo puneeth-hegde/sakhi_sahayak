@@ -1,0 +1,47 @@
+{
+  "id": "water_sanitation_001",
+  "title": "Water Safety & Sanitation for Health",
+  "category": "health",
+  "subcategory": "hygiene",
+  "source": "WHO, National Health Mission, WASH Guidelines",
+  "updated_date": "2026-05-07",
+  "trust_level": "high",
+  "language": "en",
+  "chunks": [
+    {
+      "chunk_id": "water_sanitation_001_001",
+      "title": "Waterborne Diseases Prevention",
+      "content": "1 in 4 people globally lack safe drinking water. Waterborne diseases (diarrhea, cholera, typhoid, hepatitis A, polio) kill 1.4 million people yearly. These diseases spread through contaminated water used for drinking/cooking. Prevent by: (1) Drinking only safe water - boil 10 minutes OR use water purification tablet OR use RO filter, (2) Wash hands with soap after toilet/before eating, (3) Wash food under clean running water, (4) Proper food storage (cover from flies), (5) Keep toilet 30m away from well/water source.",
+      "keywords": ["water", "safe", "diarrhea", "cholera", "contamination"],
+      "reading_time_seconds": 50
+    },
+    {
+      "chunk_id": "water_sanitation_001_002",
+      "title": "System for Detecting Contamination",
+      "content": "Signs water is contaminated: cloudy appearance, brown/yellow color, unusual smell/taste, visible sediment, algae growth. If well/tap water contaminated: (1) Boil for 10+ minutes before use, (2) Use boiled water for cooking, drinking, teeth-brushing, baby formula, (3) Store boiled water in clean covered container max 24 hours, (4) Report to local health/water authority. In cholera outbreaks: disinfect well with potassium permanganate (purple powder) or bleach - ask health center. Do NOT use untreated river/pond water.",
+      "keywords": ["contamination", "boiling", "disinfection", "safe", "color"],
+      "reading_time_seconds": 45
+    },
+    {
+      "chunk_id": "water_sanitation_001_003",
+      "title": "Importance of Toilets & Sewage",
+      "content": "Open defecation causes 50% of diarrhea cases in children. Proper toilet must: (1) Separate human waste from groundwater, (2) Be at least 30m away from well/water source, (3) Have proper waste pit or septic tank, (4) Have hand-washing station with water+soap. Swachh Bharat Mission (Clean India) has installed toilets in 90%+ villages. Every home must have toilet - no open defecation. Hand-washing after toilet + before eating prevents multiple diseases. In areas without toilet, dig temporary pit latrine 30m from water source.",
+      "keywords": ["toilet", "sanitation", "sewage", "pit", "handwashing"],
+      "reading_time_seconds": 45
+    },
+    {
+      "chunk_id": "water_sanitation_001_004",
+      "title": "Hygiene Practices for Disease Prevention",
+      "content": "Critical hygiene: (1) Wash hands with soap-water: after toilet, before eating, before food prep, after touching animals/soil, after coughing/sneezing - hand-washing alone prevents 30-40% infections, (2) Trim fingernails short - dirt/worms hide under nails, (3) Bathe regularly (at least 2x weekly), (4) Wash clothes, bedding - boil if TB patient in home, (5) Separate eating utensils for TB/diarrhea patients, (6) Keep food covered from flies/insects, (7) Cook food thoroughly.",
+      "keywords": ["handwashing", "hygiene", "soap", "clean", "disease"],
+      "reading_time_seconds": 45
+    },
+    {
+      "chunk_id": "water_sanitation_001_005",
+      "title": "Diarrhea Management at Home",
+      "content": "Diarrheal disease kills 400,000 children <5 yearly, mostly from dehydration. Home treatment: (1) ORS (Oral Rehydration Solution) - mix 1 sachet in 1L water, give frequently, (2) Continue breastfeeding/normal feeding (food doesn't worsen diarrhea), (3) Zinc supplement - 20mg daily for 10-14 days (prevents future diarrhea). Seek hospital if: bloody stool, severe vomiting (unable to drink), signs of dehydration (dry mouth, sunken eyes, lethargy), diarrhea >2 weeks, infant <6 months, fever >38.5°C. Babies <2 months: always seek hospital care.",
+      "keywords": ["diarrhea", "dehydration", "ORS", "zinc", "children"],
+      "reading_time_seconds": 50
+    }
+  ]
+}

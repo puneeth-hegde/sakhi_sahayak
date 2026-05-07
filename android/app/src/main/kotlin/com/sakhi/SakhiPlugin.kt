@@ -35,7 +35,7 @@ class SakhiPlugin : FlutterPlugin, MethodChannel.MethodCallHandler {
     override fun onMethodCall(call: MethodCall, result: MethodChannel.Result) {
         when (call.method) {
             "loadModel" -> {
-                Thread {
+            Thread {
                     try {
                         sttEngine.loadWhisperModel()
                         ttsEngine.loadModel()

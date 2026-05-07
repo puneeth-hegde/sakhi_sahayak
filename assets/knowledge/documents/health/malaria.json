@@ -1,0 +1,47 @@
+{
+  "id": "malaria_001",
+  "title": "Malaria Management & Prevention",
+  "category": "health",
+  "subcategory": "infectious_disease",
+  "source": "WHO, Wikipedia Medical Database",
+  "updated_date": "2026-05-07",
+  "trust_level": "high",
+  "language": "en",
+  "chunks": [
+    {
+      "chunk_id": "malaria_001_001",
+      "title": "What is Malaria?",
+      "content": "Malaria is a serious, sometimes fatal disease transmitted by mosquitoes. It spreads through infected mosquito bites, not direct contact. The parasite (Plasmodium) lives in the mosquito, and when the mosquito bites, the parasite enters the blood. Malaria occurs in tropical and subtropical regions. Symptoms appear 5-25 days after infection. Anyone can get malaria, but children under 5, pregnant women, and people with weak immunity are at highest risk.",
+      "keywords": ["malaria", "mosquito", "parasite", "transmission", "tropical"],
+      "reading_time_seconds": 45
+    },
+    {
+      "chunk_id": "malaria_001_002",
+      "title": "Symptoms & Diagnosis of Malaria",
+      "content": "Early symptoms include fever, chills, nausea, muscle aches, and fatigue. Fever can reach 104°F (40°C). Severe malaria can cause confusion, loss of consciousness, coma, organ failure, and death. Diagnosis requires blood tests - the most sensitive method is PCR (polymerase chain reaction) which amplifies parasite DNA. Rapid diagnostic tests detect parasite proteins in blood. If symptoms appear after traveling to a malaria area, seek medical help immediately. Do NOT treat at home with unverified medicines.",
+      "keywords": ["fever", "chills", "diagnosis", "blood test", "symptoms"],
+      "reading_time_seconds": 60
+    },
+    {
+      "chunk_id": "malaria_001_003",
+      "title": "Treatment of Malaria - Critical",
+      "content": "CRITICAL: Malaria requires IMMEDIATE medical treatment. Do not delay. Standard treatment is Artemether-Lumefantrine taken orally for 3 days for P. falciparum malaria. Complete the full course even if symptoms stop. Other combinations may be needed based on parasite type and drug resistance. Treatment must start within 24 hours of diagnosis. In 2026, new infant formulations are available for babies 2-5 kg. Untreated malaria can cause organ damage, brain damage, or death within days.",
+      "keywords": ["treatment", "artemether", "medicine", "urgent", "hospital"],
+      "reading_time_seconds": 50
+    },
+    {
+      "chunk_id": "malaria_001_004",
+      "title": "Prevention & Protection",
+      "content": "Prevent malaria by: (1) Sleep under long-lasting insecticide-treated bed nets every night, (2) Use mosquito repellent (DEET-based sprays), (3) Wear long sleeves and pants at dusk (mosquitoes bite at dawn and dusk), (4) Use screens on windows, (5) Avoid stagnant water near home - drain buckets, fix pipes, (6) In 2026, malaria vaccines (RTS,S and R21) are available in endemic regions for children under 5 - ask health worker. These vaccines reduce malaria risk by 70-77%.",
+      "keywords": ["prevention", "bed net", "repellent", "vaccine", "protection"],
+      "reading_time_seconds": 55
+    },
+    {
+      "chunk_id": "malaria_001_005",
+      "title": "Pregnancy & Child Malaria",
+      "content": "Pregnant women with malaria have severe risks: miscarriage, low birth weight baby, anemia, and death. Infants born to infected mothers face seizures, low blood sugar, brain damage. If pregnant and in malaria area, take preventive medicine monthly (given at health centers). All young children under 5 in malaria areas should receive seasonal malaria preventive medicine during monsoon months (June-October) at primary health center. Do NOT give any fever medicine without medical confirmation of parasite type - wrong treatment can be fatal.",
+      "keywords": ["pregnancy", "infant", "child", "prevention", "risk"],
+      "reading_time_seconds": 50
+    }
+  ]
+}

@@ -11,38 +11,26 @@ class SakhiPlatformWindows extends SakhiPlatform {
 
   @override
   Future<bool> initialize() async {
-    print("Windows: initialize()");
-
     // Load whisper_bridge.dll via FFI
     _whisper = WhisperFFI();
 
-    // ---- FIXED ABSOLUTE PATHS ----
-
-    // 1) Correct whisper.dll location
+    // Correct whisper.dll location
     final whisperDll = File("windows/sakhi_native/whisper.dll").absolute.path;
 
-    // 2) Correct model location (your chosen real folder)
+    // Correct model location
     final modelPath = File(
       "windows/sakhi_native/models/whisper_tiny_q8.bin",
     ).absolute.path;
 
-    print("Windows: Whisper DLL → $whisperDll");
-    print("Windows: Whisper model → $modelPath");
-
     // Initialize whisper engine
     _ready = await _whisper.initialize(whisperDll, modelPath);
-
-    print("Windows: Whisper initialized? → $_ready");
 
     return _ready;
   }
 
   @override
   Future<String?> transcribeAudio(Uint8List audioBytes) async {
-    print("Windows: transcribeAudio() called");
-
     if (!_ready) {
-      print("Windows ERROR: Whisper not initialized");
       return null;
     }
 
@@ -50,15 +38,9 @@ class SakhiPlatformWindows extends SakhiPlatform {
     final tmp = await getTemporaryDirectory();
     final wavPath = File("${tmp.path}/input.wav").absolute.path;
 
-    print("Windows: Saving WAV → $wavPath");
-
     await File(wavPath).writeAsBytes(audioBytes);
 
-    print("Windows: Running Whisper transcription...");
-
     final result = await _whisper.transcribe(wavPath);
-
-    print("Windows: Whisper result → $result");
 
     return result;
   }
@@ -68,18 +50,17 @@ class SakhiPlatformWindows extends SakhiPlatform {
     String text,
     Map<String, dynamic> prefs,
   ) async {
-    print("Windows: simplifyText() called");
-
+    // TODO: Phase 1 - Implement Windows LLM simplification
     return {
       "steps": [
         {"id": 1, "text": "You said: $text"},
-        {"id": 2, "text": "(LLaMA simplification coming next)"},
+        {"id": 2, "text": "(LLM simplification not yet implemented for Windows)"},
       ],
     };
   }
 
   @override
   Future<void> speakText(String text, double speed) async {
-    print("Windows: speakText() called (not implemented)");
+    // TODO: Windows TTS implementation pending
   }
 }

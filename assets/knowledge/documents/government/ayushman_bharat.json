@@ -1,0 +1,47 @@
+{
+  "id": "ayushman_bharat_001",
+  "title": "Ayushman Bharat - Free Health Insurance",
+  "category": "government",
+  "subcategory": "healthcare",
+  "source": "Ministry of Labour & Employment, PM-JAY Official",
+  "updated_date": "2026-05-07",
+  "trust_level": "high",
+  "language": "en",
+  "chunks": [
+    {
+      "chunk_id": "ayushman_bharat_001_001",
+      "title": "PM-JAY Program - Free Hospital Care",
+      "content": "Pradhan Mantri Jan Arogya Yojana (PM-JAY / Ayushman Bharat) provides FREE health insurance covering hospitalization up to ₹5 lakh/family/year to:40 crore (entire poorer section) Indian families. Covered under SECC (Socio-Economic Caste Census) database, APL landless families, NREGA workers. Registration: Check eligibility at www.pmjay.gov.in or visit nearest empaneled hospital/health center. Generate referral ID (free). Benefits: ALL hospital charges covered (no out-of-pocket expense), treatment at 50,000+ hospitals (government + private empaneled), surgeries, medicines, diagnostics, pre+post-hospitalization costs.",
+      "keywords": ["Ayushman", "PM-JAY", "insurance", "hospital", "free"],
+      "reading_time_seconds": 50
+    },
+    {
+      "chunk_id": "ayushman_bharat_001_002",
+      "title": "Eligible Diseases & Coverage",
+      "content": "Covers 1,393 procedures including: (1) Surgery - appendectomy, hernia, cataract, hysterectomy, (2) Medicine - cancer treatment, dialysis, cardiac surgery, (3) Hospitalization - admission charges, bed, anesthesia, operation theater, medicine, blood transfusion, (4) Pre-hospitalization diagnostics (1 month before), (5) Post-hospitalization follow-up (15 days after discharge). NOT covered: Outpatient treatment (not related to hospitalization), fertility treatment, cosmetic surgery, alcohol rehabilitation. Excluded conditions: Injury from drinking alcohol, risky activities. Check full MCR (Medical Cost Rule) for specifics.",
+      "keywords": ["coverage", "disease", "surgery", "hospitalization", "treatment"],
+      "reading_time_seconds": 50
+    },
+    {
+      "chunk_id": "ayushman_bharat_001_003",
+      "title": "How to Use PM-JAY Card",
+      "content": "Steps to get free treatment: (1) Check eligibility online at pmjay.gov.in using phone/SECC ID, (2) If eligible, visit nearby empaneled hospital, (3) Hospital prepares benefit eligibility document (FREE), (4) Get card generated on-site (takes 15 mins), (5) Proceed with treatment - zero cost to you, (6) Hospital gets paid by PMJAY directly. No need to carry original documents - digital authentication sufficient. Cards valid 1 year, renewed annually. Lost card? Get duplicate same-day at hospital. Keep prescription/discharge summary for records.",
+      "keywords": ["card", "eligibility", "hospital", "process", "free"],
+      "reading_time_seconds": 45
+    },
+    {
+      "chunk_id": "ayushman_bharat_001_004",
+      "title": "Government Health Centers & AB-HWC",
+      "content": "Health centers strengthened under Ayushman Bharat: (1) Health & Wellness Centers (AB-HWCs) - every village gets health check-up center for blood pressure, blood sugar, cholesterol, weight check (free), (2) Primary Health Centers (PHCs) - handle normal deliveries, basic surgeries, lab tests (free), (3) Community Health Centers (CHCs) - district hospitals with specialists, complicated deliveries, surgeries. All services FREE for poor families. Registration: Simple - provide name + Aadhaar. Can walk-in, no appointment needed.",
+      "keywords": ["health center", "wellness", "PHC", "CHC", "checkup"],
+      "reading_time_seconds": 45
+    },
+    {
+      "chunk_id": "ayushman_bharat_001_005",
+      "title": "Grievances & Helpline",
+      "content": "If problem with treatment/payment: (1) Contact hospital patient grievance cell immediately, (2) Call PMJAY helpline 1800-111-565 (toll-free), (3) File complaint online at pmjay.gov.in, (4) Contact district PM-JAY coordinator. Common issues: Hospital refusing treatment (illegal - escalate immediately), charges asked (report to helpline), card not working (call support). Response time: 24-48 hours for resolution. No bribery needed - system is fully digital. If treated unfairly, you have right to file RTI (Right to Information) + legal action.",
+      "keywords": ["grievance", "helpline", "complaint", "problem", "support"],
+      "reading_time_seconds": 45
+    }
+  ]
+}
