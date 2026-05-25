@@ -241,7 +241,7 @@ Java_com_sakhi_LLMRunner_infer(JNIEnv* env, jobject thiz, jstring prompt) {
     const llama_model* model = llama_get_model(g_llama);
     
     // Clear KV cache before new inference to prevent OOM
-    llama_kv_cache_clear(g_llama);
+    llama_memory_clear(llama_get_memory(g_llama), true);
     const llama_vocab* vocab = llama_model_get_vocab(model);
     if (!vocab) {
         LOGE("infer: failed to get vocab");
