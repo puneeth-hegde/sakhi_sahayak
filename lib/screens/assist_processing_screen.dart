@@ -33,9 +33,11 @@ class _AssistProcessingScreenState extends State<AssistProcessingScreen> {
     final platform = Provider.of<SakhiPlatform>(context, listen: false);
 
     // 1. SPEECH RECOGNITION
+    if (!mounted) return;
     setState(() => status = "Recognizing speech...");
     final text = await platform.transcribeAudio(widget.audioData);
 
+    if (!mounted) return;
     if (text == null || text.trim().isEmpty) {
       _error("Couldn't understand your audio.");
       return;
@@ -44,6 +46,8 @@ class _AssistProcessingScreenState extends State<AssistProcessingScreen> {
     // 2. INTENT DETECTION
     setState(() => status = "Identifying intent...");
     final intent = await intentDetector.detectIntent(text);
+
+    if (!mounted) return;
 
     // -----------------------------------------
     // CASE A: HIGH CONFIDENCE REPORT → DIRECT ROUTE
@@ -72,6 +76,8 @@ class _AssistProcessingScreenState extends State<AssistProcessingScreen> {
     // -----------------------------------------
     setState(() => status = "Understanding...");
     final retrievedHits = await KnowledgeRetriever.search(text, topK: 3);
+    
+    if (!mounted) return;
     final retrievedContext = retrievedHits.isEmpty
         ? ""
         : retrievedHits.map((hit) {
@@ -94,6 +100,7 @@ class _AssistProcessingScreenState extends State<AssistProcessingScreen> {
 
     final result = await platform.simplifyText(text, prefs);
 
+    if (!mounted) return;
     if (result == null || result['steps'] == null) {
       _error("Couldn't process your request.");
       return;

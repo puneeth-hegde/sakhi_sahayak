@@ -78,6 +78,8 @@ class _AssistResultScreenState extends State<AssistResultScreen> {
                                 card.iconPath,
                                 width: 24,
                                 height: 24,
+                                errorBuilder: (context, error, stackTrace) =>
+                                    Icon(Icons.info, size: 24, color: Colors.purple),
                               ),
                             ),
                             SizedBox(width: 10),

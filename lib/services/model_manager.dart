@@ -17,16 +17,9 @@ class ModelManager {
       await modelDir.create(recursive: true);
     }
 
-    for (var entry in models.entries) {
-      final source = entry.value;
-      final fileName = source.split('/').last;
-      final target = File("${modelDir.path}/$fileName");
-
-      if (!await target.exists()) {
-        final byteData = await rootBundle.load(source);
-        await target.writeAsBytes(byteData.buffer.asUint8List(), flush: true);
-      }
-    }
+    // Model copying is now handled entirely by the native Android layer
+    // to prevent Out-Of-Memory (OOM) crashes in the Dart VM.
+    // See SakhiPlugin.kt and STTEngine.kt.
 
     return modelDir.path;
   }

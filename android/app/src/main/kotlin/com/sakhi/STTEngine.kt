@@ -22,45 +22,41 @@ class STTEngine(private val ctx: Context) {
     external fun nativeTranscribe(buf: FloatArray?, length: Int): String?
     external fun nativeUnloadModel()
 
-    // 🔥 FIXED MODEL LOADING - Asset path corrected for Flutter APK structure
+    // 🔥 FIXED MODEL LOADING - Synchronous load for SakhiPlugin Thread
     fun loadWhisperModel(assetName: String = "models/whisper_tiny_q8.bin") {
-        scope.launch(Dispatchers.IO) {
-            try {
-                val outDir = File(ctx.filesDir, "models")
-                if (!outDir.exists()) outDir.mkdirs()
+        try {
+            val outDir = File(ctx.filesDir, "models")
+            if (!outDir.exists()) outDir.mkdirs()
 
-                val fileName = assetName.split('/').last()
-                val outFile = File(outDir, fileName)
+            val fileName = assetName.split('/').last()
+            val outFile = File(outDir, fileName)
 
-                // Copy from assets if missing
-                if (!outFile.exists() || outFile.length() == 0L) {
-                    Log.i(TAG, "Copying Whisper model to: ${outFile.absolutePath}")
-                    try {
-                        ctx.assets.open(assetName).use { input ->
-                            FileOutputStream(outFile).use { output ->
-                                input.copyTo(output)
-                            }
+            // Copy from assets if missing
+            if (!outFile.exists() || outFile.length() == 0L) {
+                Log.i(TAG, "Copying Whisper model to: ${outFile.absolutePath}")
+                try {
+                    ctx.assets.open(assetName).use { input ->
+                        FileOutputStream(outFile).use { output ->
+                            input.copyTo(output)
                         }
-                    } catch (e: Exception) {
-                        Log.e(TAG, "Asset not found at $assetName, checking alternate path", e)
-                        throw e
                     }
-                } else {
-                    Log.i(TAG, "Whisper model exists: size=${outFile.length()}")
+                } catch (e: Exception) {
+                    Log.e(TAG, "Asset not found at $assetName", e)
+                    throw e
                 }
-
-                // 🔥 CALL THE NATIVE MODEL LOAD
-                val ok = nativeLoadModel(outFile.absolutePath)
-
-                withContext(Dispatchers.Main) {
-                    nativeLoaded = ok
-                    Log.i(TAG, "nativeLoadModel() returned = $ok")
-                }
-
-            } catch (e: Exception) {
-                Log.e(TAG, "Model loading failed: ${e.message}", e)
-                nativeLoaded = false
+            } else {
+                Log.i(TAG, "Whisper model exists: size=${outFile.length()}")
             }
+
+            // 🔥 CALL THE NATIVE MODEL LOAD
+            val ok = nativeLoadModel(outFile.absolutePath)
+            nativeLoaded = ok
+            Log.i(TAG, "nativeLoadModel() returned = $ok")
+
+        } catch (e: Exception) {
+            Log.e(TAG, "Model loading failed: ${e.message}", e)
+            nativeLoaded = false
+            throw e
         }
     }
 

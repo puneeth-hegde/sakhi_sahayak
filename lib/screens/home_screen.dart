@@ -39,6 +39,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
     try {
       await ModelManager.prepareModels();
+      if (!mounted) return;
       final platform = Provider.of<SakhiPlatform>(context, listen: false);
       final initSuccess = await platform.initialize();
 

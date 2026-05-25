@@ -9,6 +9,7 @@ import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
 import java.io.ByteArrayOutputStream
 import java.io.File
+import java.io.FileOutputStream
 import java.util.concurrent.atomic.AtomicBoolean
 
 class SakhiPlugin : FlutterPlugin, MethodChannel.MethodCallHandler {
@@ -35,12 +36,23 @@ class SakhiPlugin : FlutterPlugin, MethodChannel.MethodCallHandler {
     override fun onMethodCall(call: MethodCall, result: MethodChannel.Result) {
         when (call.method) {
             "loadModel" -> {
-            Thread {
+                Thread {
                     try {
                         sttEngine.loadWhisperModel()
                         ttsEngine.loadModel()
+                        
                         val modelDir = File(context.filesDir, "models")
+                        if (!modelDir.exists()) modelDir.mkdirs()
                         val llamaFile = File(modelDir, "llama_1b_q4.gguf")
+                        
+                        if (!llamaFile.exists() || llamaFile.length() == 0L) {
+                            context.assets.open("models/llama_1b_q4.gguf").use { input ->
+                                FileOutputStream(llamaFile).use { output ->
+                                    input.copyTo(output)
+                                }
+                            }
+                        }
+                        
                         if (llamaFile.exists()) {
                             llmRunner.loadModel(llamaFile.absolutePath)
                         }
@@ -66,13 +78,19 @@ class SakhiPlugin : FlutterPlugin, MethodChannel.MethodCallHandler {
             }
 
             "transcribeAudio" -> {
-                val audioBytes = call.arguments as ByteArray
+                val audioBytes = call.arguments as? ByteArray ?: ByteArray(0)
                 Thread {
-                   val floatData = pcm16ToFloat(audioBytes)
-                   val text = sttEngine.transcribe(floatData)
-                   android.os.Handler(android.os.Looper.getMainLooper()).post {
-                       result.success(text)
-                   }
+                    try {
+                        val floatData = pcm16ToFloat(audioBytes)
+                        val text = sttEngine.transcribe(floatData)
+                        android.os.Handler(android.os.Looper.getMainLooper()).post {
+                            result.success(text)
+                        }
+                    } catch (e: Exception) {
+                        android.os.Handler(android.os.Looper.getMainLooper()).post {
+                            result.error("TRANSCRIBE_ERROR", e.message, null)
+                        }
+                    }
                 }.start()
             }
 
@@ -150,12 +168,14 @@ class SakhiPlugin : FlutterPlugin, MethodChannel.MethodCallHandler {
         val outLen = bytes.size / 2
         val out = FloatArray(outLen)
         var j = 0
-        for (i in 0 until bytes.size step 2) {
+        var i = 0
+        while (i + 1 < bytes.size) {
             val low = bytes[i].toInt() and 0xFF
             val high = bytes[i + 1].toInt()
             val sample = (high shl 8) or low
             val signed = if (sample > 32767) sample - 65536 else sample
             out[j++] = signed / 32768f
+            i += 2
         }
         return out
     }

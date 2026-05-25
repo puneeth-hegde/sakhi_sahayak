@@ -7,6 +7,7 @@
 #include <limits>
 #include <cstring>
 #include <cmath>
+#include <ctime>
 
 #define LOG_TAG "LLamaJNI"
 #define LOGI(...) __android_log_print(ANDROID_LOG_INFO, LOG_TAG, __VA_ARGS__)
@@ -183,6 +184,9 @@ Java_com_sakhi_LLMRunner_initModel(JNIEnv* env, jobject thiz, jstring modelPath)
     }
 
     LOGI("Initializing llama backend, loading model from: %s", path);
+
+    // Seed the random number generator used by LLM sampling
+    srand(time(NULL));
 
     llama_backend_init();
 

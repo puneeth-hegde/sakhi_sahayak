@@ -30,7 +30,8 @@ class PictogramMapper {
     for (var step in steps) {
       final text = step['text'] ?? "";
       final icon = _findIcon(text);
-      cards.add(StoryboardCard(id: step['id'], text: text, iconPath: icon));
+      final id = step['id'] ?? (cards.length + 1);
+      cards.add(StoryboardCard(id: id, text: text, iconPath: icon));
     }
     return cards;
   }
