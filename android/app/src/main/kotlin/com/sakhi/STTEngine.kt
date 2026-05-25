@@ -23,7 +23,7 @@ class STTEngine(private val ctx: Context) {
     external fun nativeUnloadModel()
 
     // 🔥 FIXED MODEL LOADING - Synchronous load for SakhiPlugin Thread
-    fun loadWhisperModel(assetName: String = "models/whisper_tiny_q8.bin") {
+    fun loadWhisperModel(assetName: String = "flutter_assets/assets/models/whisper_tiny_q8.bin") {
         try {
             val outDir = File(ctx.filesDir, "models")
             if (!outDir.exists()) outDir.mkdirs()

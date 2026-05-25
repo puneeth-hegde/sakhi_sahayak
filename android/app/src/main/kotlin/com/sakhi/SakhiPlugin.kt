@@ -46,7 +46,7 @@ class SakhiPlugin : FlutterPlugin, MethodChannel.MethodCallHandler {
                         val llamaFile = File(modelDir, "llama_1b_q4.gguf")
                         
                         if (!llamaFile.exists() || llamaFile.length() == 0L) {
-                            context.assets.open("models/llama_1b_q4.gguf").use { input ->
+                            context.assets.open("flutter_assets/assets/models/llama_1b_q4.gguf").use { input ->
                                 FileOutputStream(llamaFile).use { output ->
                                     input.copyTo(output)
                                 }
