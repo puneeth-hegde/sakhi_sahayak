@@ -22,6 +22,7 @@ class LLMRunner(private val context: Context) {
 
     private external fun initModel(modelPath: String): Boolean
     private external fun infer(prompt: String): String
+    private external fun freeModel()
 
     // =============================================================================
     // VERIFIED CACHED RESPONSES - TOP 100+ VILLAGE QUERIES
@@ -382,6 +383,14 @@ class LLMRunner(private val context: Context) {
         val ok = initModel(modelPath)
         isLoaded = ok
         return ok
+    }
+
+    fun unload() {
+        if (isLoaded) {
+            Log.i("LLMRunner", "Unloading model from memory")
+            freeModel()
+            isLoaded = false
+        }
     }
 
     /**

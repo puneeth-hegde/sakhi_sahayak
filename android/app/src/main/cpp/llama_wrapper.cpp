@@ -239,6 +239,9 @@ Java_com_sakhi_LLMRunner_infer(JNIEnv* env, jobject thiz, jstring prompt) {
     LOGI("infer: received prompt: %s", input);
 
     const llama_model* model = llama_get_model(g_llama);
+    
+    // Clear KV cache before new inference to prevent OOM
+    llama_kv_cache_clear(g_llama);
     const llama_vocab* vocab = llama_model_get_vocab(model);
     if (!vocab) {
         LOGE("infer: failed to get vocab");
@@ -374,4 +377,20 @@ Java_com_sakhi_LLMRunner_infer(JNIEnv* env, jobject thiz, jstring prompt) {
 
     LOGI("infer: generated %zu tokens, output length=%zu chars", gen_tokens.size(), generated_text.size());
     return env->NewStringUTF(generated_text.c_str());
+}
+
+// =============================================================================
+// JNI: FREE MODEL
+// =============================================================================
+extern "C" JNIEXPORT void JNICALL
+Java_com_sakhi_LLMRunner_freeModel(JNIEnv* env, jobject thiz) {
+    LOGI("freeModel: cleaning up llama context and model");
+    if (g_llama != nullptr) {
+        llama_free(g_llama);
+        g_llama = nullptr;
+    }
+    if (g_model != nullptr) {
+        llama_model_free(g_model);
+        g_model = nullptr;
+    }
 }

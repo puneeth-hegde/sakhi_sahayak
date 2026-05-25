@@ -1,5 +1,5 @@
 # Whisper.cpp repo clone
-android/app/src/main/cpp/whisper.cpp/
+
 
 # Build output
 build/
@@ -63,3 +63,9 @@ main.py
 *.log
 *.tmp
 *.bak
+.metadata
+.env
+uv.lock
+whisper_exports.txt
+whisper_structure.txt
+*.zip

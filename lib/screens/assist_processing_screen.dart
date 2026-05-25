@@ -89,12 +89,12 @@ class _AssistProcessingScreenState extends State<AssistProcessingScreen> {
       "preferred_sentence_length": "short",
       "retrieved_context": retrievedContext,
       "retrieved_sources": retrievedHits
-          .map((hit) => {
+          .map((hit) => ({
                 "title": hit.document.document.title,
                 "source": hit.document.document.source,
                 "category": hit.document.document.category,
                 "score": hit.score,
-              })
+              }))
           .toList(),
     };
 

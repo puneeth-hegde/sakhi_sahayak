@@ -14,10 +14,11 @@ class AudioService {
 
   Future<Uint8List> stopRecording() async {
     try {
-      final Uint8List bytes = await _channel.invokeMethod(
+      final dynamic result = await _channel.invokeMethod(
         "stopNativeRecording",
       );
-      return bytes;
+      if (result == null) return Uint8List(0);
+      return result as Uint8List;
     } catch (e) {
       print("Error stopping recording: $e");
       return Uint8List(0);

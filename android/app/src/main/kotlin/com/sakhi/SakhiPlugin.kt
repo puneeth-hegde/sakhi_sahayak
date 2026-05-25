@@ -183,5 +183,8 @@ class SakhiPlugin : FlutterPlugin, MethodChannel.MethodCallHandler {
     override fun onDetachedFromEngine(binding: FlutterPlugin.FlutterPluginBinding) {
         channel.setMethodCallHandler(null)
         if (recorder.isRecording.get()) recorder.stop()
+        if (::llmRunner.isInitialized) {
+            llmRunner.unload()
+        }
     }
 }
