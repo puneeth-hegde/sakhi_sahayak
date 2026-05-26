@@ -34,4 +34,9 @@ class SakhiPlatformAndroid extends SakhiPlatform {
   Future<void> speakText(String text, double speed) async {
     await _channel.invokeMethod('speak', {'text': text, 'speed': speed});
   }
+
+  @override
+  Future<void> stopSpeaking() async {
+    await _channel.invokeMethod('stopSpeaking');
+  }
 }

@@ -65,7 +65,7 @@ class WhisperFFI {
 
   /// Initialize the bridge and model.
   /// whisperDll = path to whisper native dll (if your bridge needs it)
-  /// modelPath = path to the model file (eg whisper_tiny_q8.bin)
+  /// modelPath = path to the model file (eg whisper_tiny.bin)
   Future<bool> initialize(String whisperDll, String modelPath) async {
     final dllC = whisperDll.toNativeUtf8();
     final modelC = modelPath.toNativeUtf8();

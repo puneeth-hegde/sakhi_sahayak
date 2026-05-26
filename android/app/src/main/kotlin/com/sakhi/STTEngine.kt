@@ -23,7 +23,7 @@ class STTEngine(private val ctx: Context) {
     external fun nativeUnloadModel()
 
     // 🔥 FIXED MODEL LOADING - Synchronous load for SakhiPlugin Thread
-    fun loadWhisperModel(assetName: String = "flutter_assets/assets/models/whisper_tiny_q8.bin") {
+    fun loadWhisperModel(assetName: String = "flutter_assets/assets/models/whisper_tiny.bin") {
         try {
             val outDir = File(ctx.filesDir, "models")
             if (!outDir.exists()) outDir.mkdirs()
@@ -31,17 +31,25 @@ class STTEngine(private val ctx: Context) {
             val fileName = assetName.split('/').last()
             val outFile = File(outDir, fileName)
 
-            // Copy from assets if missing
-            if (!outFile.exists() || outFile.length() == 0L) {
+            val expectedSize = 77691713L
+            // Copy from assets if missing or corrupted
+            if (!outFile.exists() || outFile.length() != expectedSize) {
                 Log.i(TAG, "Copying Whisper model to: ${outFile.absolutePath}")
                 try {
+                    val tmpFile = File(outDir, fileName + ".tmp")
                     ctx.assets.open(assetName).use { input ->
-                        FileOutputStream(outFile).use { output ->
+                        FileOutputStream(tmpFile).use { output ->
                             input.copyTo(output)
                         }
                     }
+                    if (tmpFile.length() == expectedSize) {
+                        tmpFile.renameTo(outFile)
+                    } else {
+                        tmpFile.delete()
+                        throw Exception("Size mismatch: expected $expectedSize, got ${tmpFile.length()}")
+                    }
                 } catch (e: Exception) {
-                    Log.e(TAG, "Asset not found at $assetName", e)
+                    Log.e(TAG, "Asset not found or copy failed for $assetName", e)
                     throw e
                 }
             } else {

@@ -69,6 +69,10 @@ The current KB focuses on practical rural topics such as:
 - Reports are stored locally using secure device storage.
 - Large model files are handled separately from normal source files.
 
+## Limitations & Known Issues
+
+- **Generative Hallucination on Edge Models**: The app runs a highly quantized LLaMA model natively on-device to ensure it works entirely offline. While semantic retrieval (RAG) accurately identifies the correct knowledge base chunk, the tiny generative model (<3B parameters) may occasionally hallucinate statistics or fail to strictly follow formatting instructions in its response. For critical medical or emergency information, the app relies heavily on a hardcoded keyword cache (`verifiedResponses` in `LLMRunner.kt`) rather than pure generation to guarantee safety.
+
 ## Models bundled with the app
 
 The app includes offline model assets for speech recognition and answer generation. These files are large, so the repository uses Git LFS rules for the binary model formats.

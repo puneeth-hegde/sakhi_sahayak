@@ -488,16 +488,6 @@ class LLMRunner(private val context: Context) {
             }
         }
 
-        if (cleanText.length > 300) {
-            val sentences = cleanText.split(". ")
-            cleanText = if (sentences.size > 2) {
-                sentences.take(2).joinToString(". ") + "."
-            } else {
-                sentences.firstOrNull() ?: cleanText
-            }
-            Log.w("LLMRunner", "Response too long, truncated to first sentences")
-        }
-
         if (isGibberish(cleanText)) {
             Log.e("LLMRunner", "Gibberish detected! Returning fallback")
             return "I'm not sure about that. Could you ask in simpler terms?"

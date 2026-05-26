@@ -14,4 +14,6 @@ abstract class SakhiPlatform {
   );
 
   Future<void> speakText(String text, double speed);
+
+  Future<void> stopSpeaking();
 }

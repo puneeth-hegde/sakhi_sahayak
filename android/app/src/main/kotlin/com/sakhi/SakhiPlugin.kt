@@ -45,11 +45,19 @@ class SakhiPlugin : FlutterPlugin, MethodChannel.MethodCallHandler {
                         if (!modelDir.exists()) modelDir.mkdirs()
                         val llamaFile = File(modelDir, "llama_1b_q4.gguf")
                         
-                        if (!llamaFile.exists() || llamaFile.length() == 0L) {
+                        val expectedSize = 807690656L
+                        if (!llamaFile.exists() || llamaFile.length() != expectedSize) {
+                            val tmpFile = File(modelDir, "llama_1b_q4.gguf.tmp")
                             context.assets.open("flutter_assets/assets/models/llama_1b_q4.gguf").use { input ->
-                                FileOutputStream(llamaFile).use { output ->
+                                FileOutputStream(tmpFile).use { output ->
                                     input.copyTo(output)
                                 }
+                            }
+                            if (tmpFile.length() == expectedSize) {
+                                tmpFile.renameTo(llamaFile)
+                            } else {
+                                tmpFile.delete()
+                                throw Exception("Size mismatch for LLaMA: expected $expectedSize, got ${tmpFile.length()}")
                             }
                         }
                         
@@ -117,6 +125,11 @@ class SakhiPlugin : FlutterPlugin, MethodChannel.MethodCallHandler {
                 val text = call.argument<String>("text") ?: ""
                 val speed = call.argument<Double>("speed")?.toFloat() ?: 1.0f
                 ttsEngine.speak(text, speed)
+                result.success(true)
+            }
+
+            "stopSpeaking" -> {
+                ttsEngine.stop()
                 result.success(true)
             }
 

@@ -40,6 +40,13 @@ class _AssistResultScreenState extends State<AssistResultScreen> {
   }
 
   @override
+  void dispose() {
+    final platform = Provider.of<SakhiPlatform>(context, listen: false);
+    platform.stopSpeaking();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(

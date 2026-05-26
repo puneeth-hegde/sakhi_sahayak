@@ -301,8 +301,8 @@ Java_com_sakhi_LLMRunner_infer(JNIEnv* env, jobject thiz, jstring prompt) {
     sparams.top_k = 40;
     sparams.top_p = 0.9f;
 
-    // REDUCED max tokens - prevents gibberish for complex questions
-    const int max_generate = 80;
+    // Increased max tokens to allow for complete step-by-step instructions
+    const int max_generate = 200;
     std::vector<llama_token> gen_tokens;
     std::vector<llama_token> all_generated;
     

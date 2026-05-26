@@ -4,7 +4,7 @@ import 'package:flutter/services.dart';
 
 class ModelManager {
   static const Map<String, String> models = {
-    "whisper": "assets/models/whisper_tiny_q8.bin",
+    "whisper": "assets/models/whisper_tiny.bin",
     "llm": "assets/models/llama_1b_q4.gguf",
   };
 

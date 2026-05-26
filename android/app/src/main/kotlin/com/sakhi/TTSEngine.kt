@@ -21,4 +21,8 @@ class TTSEngine(private val context: Context) {
         tts?.speak(text, TextToSpeech.QUEUE_FLUSH, null, "tts")
         return true
     }
+
+    fun stop() {
+        tts?.stop()
+    }
 }

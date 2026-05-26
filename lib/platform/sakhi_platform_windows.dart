@@ -19,7 +19,7 @@ class SakhiPlatformWindows extends SakhiPlatform {
 
     // Correct model location
     final modelPath = File(
-      "windows/sakhi_native/models/whisper_tiny_q8.bin",
+      "windows/sakhi_native/models/whisper_tiny.bin",
     ).absolute.path;
 
     // Initialize whisper engine
@@ -61,6 +61,11 @@ class SakhiPlatformWindows extends SakhiPlatform {
 
   @override
   Future<void> speakText(String text, double speed) async {
+    // TODO: Windows TTS implementation pending
+  }
+
+  @override
+  Future<void> stopSpeaking() async {
     // TODO: Windows TTS implementation pending
   }
 }
